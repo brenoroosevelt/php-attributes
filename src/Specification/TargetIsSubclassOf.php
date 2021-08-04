@@ -9,7 +9,7 @@ use ReflectionMethod;
 use ReflectionParameter;
 use ReflectionProperty;
 
-class TypeIsSubclassOf implements Specification
+class TargetIsSubclassOf implements Specification
 {
     public function __construct(private string $class)
     {

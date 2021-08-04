@@ -9,7 +9,7 @@ use ReflectionMethod;
 use ReflectionParameter;
 use ReflectionProperty;
 
-class MatchType implements Specification
+class TargetMatchType implements Specification
 {
     public function __construct(private string $type)
     {
@@ -22,8 +22,8 @@ class MatchType implements Specification
             $target instanceof ReflectionParameter ||
             $target instanceof ReflectionProperty
         ) {
-            $typeHint = Reflector::getTypeHint($target);
-            return in_array($this->type, $typeHint);
+            $types = Reflector::getTypeHint($target);
+            return in_array($this->type, $types);
         }
 
         return false;

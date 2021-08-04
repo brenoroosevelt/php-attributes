@@ -119,6 +119,27 @@ $attributes = Attributes::fromClass(MyClass::class, Attribute::TARGET_PROPERTY, 
 $attributes->instances();
 ```
 
+#### Filtering
+
+```php
+<?php
+use BrenoRoosevelt\PhpAttributes\Attributes;
+use BrenoRoosevelt\PhpAttributes\Specification\Criteria;
+use BrenoRoosevelt\PhpAttributes\Specification\AttributeTarget;
+use BrenoRoosevelt\PhpAttributes\Specification\TargetMatchType;
+
+$attributes = Attributes::fromClass(MyClass::class);
+
+$attributes
+    ->where(
+        Criteria::and(
+            new AttributeTarget(Attribute::TARGET_PROPERTY), 
+            new TargetMatchType(AnyClassType::class) // or primitives 'int', 'float', ...
+        )
+    )
+    ->instances();
+```
+
 ## Run test suite
 ```bash
 composer test
