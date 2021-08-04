@@ -86,11 +86,11 @@ $attributes->hasMany(MyAttr::class);        // bool
 $attributes->first();                       // (object) ParsedAttribute
 $attributes->filter($callable);             // new collection 
 $attributes->instances();                   // array of attributes instances
-$attributes->firstInstance($defaultValue);  // instance of first parsed attribute from collection
+$attributes->firstInstance($defaultValue);  // instance of first parsed attribute
 $attributes->targets();                     // Reflection objects target by attributes
 $attributes->whereAttribute(MyAttr::class); // new collection filtered by attribute name
 $attributes->toArray();                     // ParsedAttribute[]
-$attributes->whereTarget(Attribute::TARGET_CLASS); // new collection filtered by attribute target
+$attributes->whereTarget(Attribute::TARGET_CLASS); // new collection filtered by target
 
 // Iterable
 foreach ($attributes as $attr) {
