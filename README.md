@@ -91,8 +91,22 @@ $attributes->targets();                     // Reflection objects target by attr
 $attributes->whereAttribute(MyAttr::class); // new collection filtered by attribute name
 $attributes->whereTarget(Attribute::TARGET_CLASS); // new collection filtered by attribute target
 ```
-## Run test suite
+The collection is immutable and fluent:
+```php
+<?php
+use BrenoRoosevelt\PhpAttributes\Attributes;
 
+$attributes = Attributes::fromClass(MyClass::class);
+
+// Get all instances for MyAttr on class properties
+$attributes
+    ->whereTarget(Attribute::TARGET_PROPERTY)
+    ->whereAttribute(MyAttr::class)
+    ->instances();
+```
+
+## Run test suite
+s
 ```bash
 composer test
 ```
