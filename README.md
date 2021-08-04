@@ -71,7 +71,7 @@ $attributes
         ReflectionAttribute::IS_INSTANCEOF
     );
 ```
-This will return a collection of [`ParsedAttribute`](src/ParsedAttribute.php).
+This will return a (immutable) collection of [`ParsedAttribute`](src/ParsedAttribute.php).
 ```php
 <?php
 use BrenoRoosevelt\PhpAttributes\Attributes;
@@ -90,8 +90,6 @@ $attributes->targets();                     // Reflection objects target by attr
 $attributes->whereAttribute(MyAttr::class); // new collection filtered by attribute name
 $attributes->whereTarget(Attribute::TARGET_CLASS); // new collection filtered by attribute target
 ```
-*The collection is immutable.
-
 ## Run test suite
 
 ```bash
