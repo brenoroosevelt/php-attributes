@@ -59,7 +59,7 @@ $attributes =
         [MyClass::class, Another_Class::class],
         
         // target: where to search for attributes
-        // default value is Attribute::TARGET_ALL
+        // default value is Attribute::TARGET_ALL (parse entire class)
         Attribute::TARGET_METHOD|Attribute::TARGET_PROPERTY,  
         
         // attribute: the attribute name (string)
@@ -67,7 +67,7 @@ $attributes =
         MyAttribute::class, 
         
         // flags: flags to filter attributes.     
-        // default values is 0 (no filter will be applied )
+        // default values is 0 (no filter will be applied)
         ReflectionAttribute::IS_INSTANCEOF
     );
 ```
