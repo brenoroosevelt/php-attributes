@@ -3,14 +3,7 @@ declare(strict_types=1);
 
 namespace BrenoRosevelt\PhpAttributes;
 
-use Composer\Repository\CompositeRepository;
-use FlexFqcnFinder\Filter\FqcnSpecification;
-use FlexFqcnFinder\Filter\Specifications\AlwaysTrue;
-use FlexFqcnFinder\Finder\Decorator\FilteringFqcnFinder;
-use FlexFqcnFinder\Finder\FqcnFinder;
-use FlexFqcnFinder\FqcnFinderComposite;
 use FlexFqcnFinder\FqcnFinderInterface;
-use FlexFqcnFinder\Repository\FilesFromDir;
 use ReflectionClass;
 use ReflectionClassConstant;
 use ReflectionMethod;
@@ -20,9 +13,10 @@ use Attribute;
 
 class AttributesFactory
 {
-    public static function from(array $reflectionObject, string $attribute = null, int $flags = 0): Attributes
+    public static function from(string|array $reflectionObject, string $attribute = null, int $flags = 0): Attributes
     {
         $attributes = [];
+        $reflectionObject = is_array($reflectionObject) ? $reflectionObject : [$reflectionObject];
         foreach ($reflectionObject as $object) {
             if ($object instanceof ReflectionClass ||
                 $object instanceof ReflectionMethod ||
