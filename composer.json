@@ -1,0 +1,50 @@
+{
+  "name": "brenoroosevelt/php-attributes",
+  "description": "Easy way to handle PHP Attributes",
+  "keywords": [
+    "php8",
+    "attributes",
+    "extractor",
+    "php 8",
+    "annotation"
+  ],
+  "homepage": "http://github.com/brenoroosevelt/php-attributes",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Breno Roosevelt",
+      "email": "breno.roosevelt@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^8"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^0.12.90",
+    "phpunit/phpunit": "^9.0",
+    "squizlabs/php_codesniffer": "3.5.*"
+  },
+  "config": {
+    "process-timeout": 0,
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "BrenoRosevelt\\PhpAttributes\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "BrenoRosevelt\\PhpAttributes\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "start": "php -S localhost:8080 -t web",
+    "test": "phpunit",
+    "check": [
+      "phpunit",
+      "phpstan",
+      "phpcs -p src tests"
+    ]
+  }
+}
