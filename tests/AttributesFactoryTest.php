@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace BrenoRosevelt\PhpAttributes\Tests;
+namespace BrenoRoosevelt\PhpAttributes\Tests;
 
 use Attribute;
-use BrenoRosevelt\PhpAttributes\AttributesFactory;
-use BrenoRosevelt\PhpAttributes\Tests\Fixture\Attr1;
-use BrenoRosevelt\PhpAttributes\Tests\Fixture\Attr2;
-use BrenoRosevelt\PhpAttributes\Tests\Fixture\Stub;
+use BrenoRoosevelt\PhpAttributes\AttributesFactory;
+use BrenoRoosevelt\PhpAttributes\Tests\Fixture\Attr1;
+use BrenoRoosevelt\PhpAttributes\Tests\Fixture\Attr2;
+use BrenoRoosevelt\PhpAttributes\Tests\Fixture\Stub;
 use FlexFqcnFinder\Filter\Filter;
 use FlexFqcnFinder\Fqcn;
 use ReflectionClass;

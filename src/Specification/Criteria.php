@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace BrenoRosevelt\PhpAttributes\Specification;
+namespace BrenoRoosevelt\PhpAttributes\Specification;
 
-use BrenoRosevelt\PhpAttributes\Specification;
+use BrenoRoosevelt\PhpAttributes\Specification;
 
 class Criteria
 {

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace BrenoRosevelt\PhpAttributes\Tests\Fixture;
+namespace BrenoRoosevelt\PhpAttributes\Tests\Fixture;
 
 #[Attr1('targetClass1')]
 #[Attr2('targetClass2')]

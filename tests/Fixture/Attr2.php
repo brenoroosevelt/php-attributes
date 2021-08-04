@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace BrenoRosevelt\PhpAttributes\Tests\Fixture;
+namespace BrenoRoosevelt\PhpAttributes\Tests\Fixture;
 
 use Attribute;
 

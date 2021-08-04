@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace BrenoRosevelt\PhpAttributes;
+namespace BrenoRoosevelt\PhpAttributes;
 
 use ArrayIterator;
-use BrenoRosevelt\PhpAttributes\Specification\AttributeName;
-use BrenoRosevelt\PhpAttributes\Specification\AttributeTarget;
+use BrenoRoosevelt\PhpAttributes\Specification\AttributeName;
+use BrenoRoosevelt\PhpAttributes\Specification\AttributeTarget;
 use Countable;
 use IteratorAggregate;
 use ReflectionAttribute;

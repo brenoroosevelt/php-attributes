@@ -31,12 +31,12 @@
   },
   "autoload": {
     "psr-4": {
-      "BrenoRosevelt\\PhpAttributes\\": "src/"
+      "BrenoRoosevelt\\PhpAttributes\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "BrenoRosevelt\\PhpAttributes\\Tests\\": "tests/"
+      "BrenoRoosevelt\\PhpAttributes\\Tests\\": "tests/"
     }
   },
   "scripts": {
