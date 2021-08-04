@@ -71,7 +71,7 @@ $attributes
         ReflectionAttribute::IS_INSTANCEOF
     );
 ```
-This will return a (immutable) collection of [`ParsedAttribute`](src/ParsedAttribute.php).
+This will return a collection of [`ParsedAttribute`](src/ParsedAttribute.php).
 ```php
 <?php
 use BrenoRoosevelt\PhpAttributes\Attributes;
