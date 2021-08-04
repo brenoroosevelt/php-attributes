@@ -80,4 +80,29 @@ class AttributesFactoryTest extends TestCase
         $this->assertEquals('targetParameter2', $instances[1]->id);
         $this->assertContainsOnlyInstancesOf(ReflectionParameter::class, $attributes->targets());
     }
+
+    /** @test */
+    public function shouldExtractAllAttributes()
+    {
+        $attributes = AttributesFactory::fromClass(Stub::class);
+        $this->assertEquals(10, $attributes->count());
+        $this->assertTrue($attributes->has(Attr1::class));
+        $this->assertTrue($attributes->has(Attr2::class));
+        $expected = [
+            'targetClass1',
+            'targetClass2',
+            'targetConstant1',
+            'targetConstant2',
+            'targetProperty1',
+            'targetProperty2',
+            'targetMethod1',
+            'targetMethod2',
+            'targetParameter1',
+            'targetParameter2',
+        ];
+
+        foreach ($attributes->instances() as $instance) {
+            $this->assertTrue(in_array($instance->id, $expected));
+        }
+    }
 }
