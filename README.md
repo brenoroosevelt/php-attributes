@@ -78,12 +78,13 @@ use BrenoRoosevelt\PhpAttributes\Attributes;
 
 $attributes = Attributes::fromClass(/** ... */);
 
+$attributes->attributes();                  // ReflectionAttribute[]
 $attributes->count();                       // int
 $attributes->isEmpty();                     // bool
 $attributes->hasAttribute(MyAttr::class);   // bool
 $attributes->hasMany(MyAttr::class);        // bool
-$attributes->first();                       // object ParsedAttribute
-$attributes->filter($callable);             // new collection
+$attributes->first();                       // (object) ParsedAttribute
+$attributes->filter($callable);             // new collection 
 $attributes->instances();                   // array of attributes instances
 $attributes->firstInstance($defaultValue);  // instance of first parsed attribute from collection
 $attributes->targets();                     // Reflection objects target by attributes
