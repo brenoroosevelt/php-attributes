@@ -77,6 +77,14 @@ class Attributes extends AttributesFactory implements IteratorAggregate, Countab
         );
     }
 
+    public function targets(): array
+    {
+        return array_map(
+            fn(ParsedAttribute $attribute) => $attribute->target(),
+            $this->attributes
+        );
+    }
+
     public function has(string $attributeName): bool
     {
         return $this->whereName($attributeName)->count() > 0;

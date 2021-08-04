@@ -46,9 +46,11 @@ class AttributesFactory
                 $reflectionObjects[] = $reflectionClass;
             }
 
-            if ($target & Attribute::TARGET_METHOD) {
+            if (($target & Attribute::TARGET_METHOD) || ($target & Attribute::TARGET_PARAMETER)) {
                 foreach ($reflectionClass->getMethods() as $method) {
-                    $reflectionObjects[] = $method;
+                    if ($target & Attribute::TARGET_METHOD) {
+                        $reflectionObjects[] = $method;
+                    }
                     if ($target & Attribute::TARGET_PARAMETER) {
                         foreach ($method->getParameters() as $parameter) {
                             $reflectionObjects[] = $parameter;
