@@ -89,7 +89,15 @@ $attributes->instances();                   // array of attributes instances
 $attributes->firstInstance($defaultValue);  // instance of first parsed attribute from collection
 $attributes->targets();                     // Reflection objects target by attributes
 $attributes->whereAttribute(MyAttr::class); // new collection filtered by attribute name
+$attributes->toArray();                     // ParsedAttribute[]
 $attributes->whereTarget(Attribute::TARGET_CLASS); // new collection filtered by attribute target
+
+// Iterable
+foreach ($attributes as $attr) {
+    $attr->attribute(); // ReflectionAttribute
+    $attr->target();    // ReflectionClass|ReflectionClassConstant|ReflectionProperty|ReflectionMethod|ReflectionParameter
+}
+
 ```
 The collection is immutable and fluent:
 ```php
