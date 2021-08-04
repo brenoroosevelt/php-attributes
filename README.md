@@ -111,7 +111,6 @@ $attributes->instances();
 ```
 
 ## Run test suite
-s
 ```bash
 composer test
 ```
