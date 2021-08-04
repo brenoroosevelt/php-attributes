@@ -48,7 +48,7 @@ use BrenoRoosevelt\PhpAttributes\Attributes;
 
 $instances = Attributes::fromClass(MyClass::class)->instances();
 ```
-Explaining parameters in detail :
+Explaining parameters in detail:
 ```php
 <?php
 use BrenoRoosevelt\PhpAttributes\Attributes;
