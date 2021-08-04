@@ -90,6 +90,7 @@ $attributes->targets();                     // Reflection objects target by attr
 $attributes->whereAttribute(MyAttr::class); // new collection filtered by attribute name
 $attributes->whereTarget(Attribute::TARGET_CLASS); // new collection filtered by attribute target
 ```
+*The collection is immutable.
 
 ## Run test suite
 
