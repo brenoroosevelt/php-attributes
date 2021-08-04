@@ -9,8 +9,6 @@ use BrenoRosevelt\PhpAttributes\Tests\Fixture\Attr1;
 use BrenoRosevelt\PhpAttributes\Tests\Fixture\Attr2;
 use BrenoRosevelt\PhpAttributes\Tests\Fixture\Stub;
 use FlexFqcnFinder\Filter\Filter;
-use FlexFqcnFinder\Filter\Specifications\Apply;
-use FlexFqcnFinder\Filter\Specifications\IsInstantiable;
 use FlexFqcnFinder\Fqcn;
 use ReflectionClass;
 use ReflectionClassConstant;

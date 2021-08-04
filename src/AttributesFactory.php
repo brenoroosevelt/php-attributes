@@ -88,8 +88,7 @@ class AttributesFactory
         int $target = Attribute::TARGET_ALL,
         string $attribute = null,
         int $flags = 0
-    ): Attributes
-    {
+    ): Attributes {
         return AttributesFactory::fromClass($finder->find(), $target, $attribute, $flags);
     }
 }
