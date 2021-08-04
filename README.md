@@ -70,10 +70,26 @@ $attributes
         // default values is 0 (no filter will be applied )
         ReflectionAttribute::IS_INSTANCEOF
     );
-
 ```
+This will return a collection of [`ParsedAttribute`](src/ParsedAttribute.php).
+```php
+<?php
+use BrenoRoosevelt\PhpAttributes\Attributes;
 
+$attributes = Attributes::fromClass(/** ... */);
 
+$attributes->count();                       // int
+$attributes->isEmpty();                     // bool
+$attributes->hasAttribute(MyAttr::class);   // bool
+$attributes->hasMany(MyAttr::class);        // bool
+$attributes->first();                       // object ParsedAttribute
+$attributes->filter($callable);             // new collection
+$attributes->instances();                   // array of attributes instances
+$attributes->firstInstance($defaultValue);  // instance of first parsed attribute from collection
+$attributes->targets();                     // Reflection objects target by attributes
+$attributes->whereAttribute(MyAttr::class); // new collection filtered by attribute name
+$attributes->whereTarget(Attribute::TARGET_CLASS); // new collection filtered by attribute target
+```
 
 ## Run test suite
 
