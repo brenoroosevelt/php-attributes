@@ -41,7 +41,7 @@ foreach ($relfectionClass->getReflectionConstants() as $property) {
 
 $instances = array_map(fn(ReflectionAttribute $attr) => $attr->newInstance(), $attributes);
 ```
-With this package you can simplify: 
+With this package you can **simplify**: 
 ```php
 <?php
 use BrenoRoosevelt\PhpAttributes\Attributes;
