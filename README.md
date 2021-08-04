@@ -46,7 +46,7 @@ With this package you can simplify:
 <?php
 use BrenoRoosevelt\PhpAttributes\Attributes;
 
-$attributes = Attributes::fromClass(MyClass::class)->instances();
+$instances = Attributes::fromClass(MyClass::class)->instances();
 ```
 Explaining parameters in detail :
 ```php
