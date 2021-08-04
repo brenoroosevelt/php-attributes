@@ -13,10 +13,67 @@ composer require brenoroosevelt/php-attributes
 ```
 
 ## Usage
+Instead of doing like this:
+
 ```php
 <?php
 
+$myAttribute = Attr::class;
+$attributes = [];
+$relfectionClass = new ReflectionClass(MyClass::class);
+foreach ($relfectionClass->getAttributes($myAttribute) as $attribute) {
+    $attributes[] = $attribute;
+}
+
+foreach ($relfectionClass->getMethods() as $methods) {
+    foreach ($methods->getAttributes($myAttribute) as $attribute) {
+        $attributes[] = $attribute;
+    }
+}
+
+foreach ($relfectionClass->getProperties() as $property) {
+     /** ... */
+}
+
+foreach ($relfectionClass->getReflectionConstants() as $property) {
+    /** ... */
+}
+
+$instances = array_map(fn(ReflectionAttribute $attr) => $attr->newInstance(), $attributes);
 ```
+With this package you can simplify: 
+```php
+<?php
+use BrenoRoosevelt\PhpAttributes\Attributes;
+
+$attributes = Attributes::fromClass(MyClass::class)->instances();
+```
+Explaining parameters in detail :
+```php
+<?php
+use BrenoRoosevelt\PhpAttributes\Attributes;
+
+$attributes 
+    = Attributes::fromClass(
+        // classes: string or an array of className
+        [MyClass::class, Another_Class::class],
+        
+        // target: where to search for attributes
+        // default value is Attribute::TARGET_ALL
+        Attribute::TARGET_METHOD|Attribute::TARGET_PROPERTY,  
+        
+        // attribute: the attribute name (string)
+        // default values is NULL (search for all attributes)
+        MyAttribute::class, 
+        
+        // flags: flags to filter attributes.     
+        // default values is 0 (no filter will be applied )
+        ReflectionAttribute::IS_INSTANCEOF
+    );
+
+```
+
+
 
 ## Run test suite
 
