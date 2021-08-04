@@ -95,7 +95,8 @@ $attributes->whereTarget(Attribute::TARGET_CLASS); // new collection filtered by
 // Iterable
 foreach ($attributes as $attr) {
     $attr->attribute(); // ReflectionAttribute
-    $attr->target();    // ReflectionClass|ReflectionClassConstant|ReflectionProperty|ReflectionMethod|ReflectionParameter
+    $attr->target();    // ReflectionClass|ReflectionClassConstant|
+                        // ReflectionProperty|ReflectionMethod|ReflectionParameter
 }
 
 ```
