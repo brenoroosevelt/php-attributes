@@ -103,6 +103,11 @@ $attributes
     ->whereTarget(Attribute::TARGET_PROPERTY)
     ->whereAttribute(MyAttr::class)
     ->instances();
+
+// You can filter the collection (like above), but it's much better:
+// ... avoid parsing the entire class 
+$attributes = Attributes::fromClass(MyClass::class, Attribute::TARGET_PROPERTY, MyAttr::class);
+$attributes->instances();
 ```
 
 ## Run test suite
