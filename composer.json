@@ -17,7 +17,8 @@
     }
   ],
   "require": {
-    "php": "^8"
+    "php": "^8",
+    "brenoroosevelt/flex-fqcn-finder": "^1"
   },
   "require-dev": {
     "phpstan/phpstan": "^0.12.90",

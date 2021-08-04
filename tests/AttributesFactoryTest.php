@@ -8,6 +8,9 @@ use BrenoRosevelt\PhpAttributes\AttributesFactory;
 use BrenoRosevelt\PhpAttributes\Tests\Fixture\Attr1;
 use BrenoRosevelt\PhpAttributes\Tests\Fixture\Attr2;
 use BrenoRosevelt\PhpAttributes\Tests\Fixture\Stub;
+use FlexFqcnFinder\Filter\Specifications\Apply;
+use FlexFqcnFinder\Filter\Specifications\IsInstantiable;
+use FlexFqcnFinder\Fqcn;
 use ReflectionClass;
 use ReflectionClassConstant;
 use ReflectionMethod;
@@ -85,6 +88,37 @@ class AttributesFactoryTest extends TestCase
     public function shouldExtractAllAttributes()
     {
         $attributes = AttributesFactory::fromClass(Stub::class);
+        $this->assertEquals(10, $attributes->count());
+        $this->assertTrue($attributes->has(Attr1::class));
+        $this->assertTrue($attributes->has(Attr2::class));
+        $expected = [
+            'targetClass1',
+            'targetClass2',
+            'targetConstant1',
+            'targetConstant2',
+            'targetProperty1',
+            'targetProperty2',
+            'targetMethod1',
+            'targetMethod2',
+            'targetParameter1',
+            'targetParameter2',
+        ];
+
+        foreach ($attributes->instances() as $instance) {
+            $this->assertTrue(in_array($instance->id, $expected));
+        }
+    }
+
+    /** @test */
+    public function shouldExtractFromFqcnFinder()
+    {
+        $attributes = AttributesFactory::fromFqcnFinder(
+            Fqcn::fromDir(__DIR__, true)
+                ->withFilter(
+                    new Apply(fn(string $fcqn) => $fcqn === Stub::class)
+                )
+        );
+
         $this->assertEquals(10, $attributes->count());
         $this->assertTrue($attributes->has(Attr1::class));
         $this->assertTrue($attributes->has(Attr2::class));

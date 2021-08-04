@@ -3,6 +3,14 @@ declare(strict_types=1);
 
 namespace BrenoRosevelt\PhpAttributes;
 
+use Composer\Repository\CompositeRepository;
+use FlexFqcnFinder\Filter\FqcnSpecification;
+use FlexFqcnFinder\Filter\Specifications\AlwaysTrue;
+use FlexFqcnFinder\Finder\Decorator\FilteringFqcnFinder;
+use FlexFqcnFinder\Finder\FqcnFinder;
+use FlexFqcnFinder\FqcnFinderComposite;
+use FlexFqcnFinder\FqcnFinderInterface;
+use FlexFqcnFinder\Repository\FilesFromDir;
 use ReflectionClass;
 use ReflectionClassConstant;
 use ReflectionMethod;
@@ -73,5 +81,15 @@ class AttributesFactory
         }
 
         return AttributesFactory::from($reflectionObjects, $attribute, $flags);
+    }
+
+    public static function fromFqcnFinder(
+        FqcnFinderInterface $finder,
+        int $target = Attribute::TARGET_ALL,
+        string $attribute = null,
+        int $flags = 0
+    ): Attributes
+    {
+        return AttributesFactory::fromClass($finder->find(), $target, $attribute, $flags);
     }
 }
