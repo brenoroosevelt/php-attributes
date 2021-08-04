@@ -5,6 +5,7 @@ namespace BrenoRoosevelt\PhpAttributes\Tests;
 
 use Attribute;
 use BrenoRoosevelt\PhpAttributes\AttributesFactory;
+use BrenoRoosevelt\PhpAttributes\Specification\Reflector;
 use BrenoRoosevelt\PhpAttributes\Tests\Fixture\Attr1;
 use BrenoRoosevelt\PhpAttributes\Tests\Fixture\Attr2;
 use BrenoRoosevelt\PhpAttributes\Tests\Fixture\Stub;
