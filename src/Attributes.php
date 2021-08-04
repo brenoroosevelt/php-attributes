@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace BrenoRosevelt\PhpAttributes;
 
 use ArrayIterator;
-use BrenoRosevelt\PhpAttributes\Specification\Attribute;
-use BrenoRosevelt\PhpAttributes\Specification\Target;
+use BrenoRosevelt\PhpAttributes\Specification\AttributeName;
+use BrenoRosevelt\PhpAttributes\Specification\AttributeTarget;
 use Countable;
 use IteratorAggregate;
 use ReflectionAttribute;
@@ -33,14 +33,14 @@ class Attributes extends AttributesFactory implements IteratorAggregate, Countab
         return $this->filter(fn(ParsedAttribute $attribute) => $specification->isSatisfiedBy($attribute));
     }
 
-    public function whereName(string $attributeName): self
+    public function whereAttribute(string $attributeName): self
     {
-        return $this->where(new Attribute($attributeName));
+        return $this->where(new AttributeName($attributeName));
     }
 
     public function whereTarget(int $target): self
     {
-        return $this->where(new Target($target));
+        return $this->where(new AttributeTarget($target));
     }
 
     public function first(): self
@@ -61,9 +61,9 @@ class Attributes extends AttributesFactory implements IteratorAggregate, Countab
         );
     }
 
-    public function singleInstance(mixed $default = null): mixed
+    public function firstInstance(mixed $default = null): mixed
     {
-        return $this->first()->instances()[0] ?? $default;
+        return isset($this->attributes[0]) ? $this->attributes[0]->attribute()->newInstance() : $default;
     }
 
     /**
@@ -85,14 +85,19 @@ class Attributes extends AttributesFactory implements IteratorAggregate, Countab
         );
     }
 
-    public function has(string $attributeName): bool
+    public function hasAttribute(string $attributeName): bool
     {
-        return $this->whereName($attributeName)->count() > 0;
+        return $this->whereAttribute($attributeName)->count() > 0;
     }
 
     public function hasMany(string $attributeName): bool
     {
-        return $this->whereName($attributeName)->count() > 1;
+        return $this->whereAttribute($attributeName)->count() > 1;
+    }
+
+    public function hasTarget(int $target): bool
+    {
+        return $this->whereTarget($target)->count() > 0;
     }
 
     public function count(): int

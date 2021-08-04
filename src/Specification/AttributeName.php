@@ -6,14 +6,14 @@ namespace BrenoRosevelt\PhpAttributes\Specification;
 use BrenoRosevelt\PhpAttributes\ParsedAttribute;
 use BrenoRosevelt\PhpAttributes\Specification;
 
-class Target implements Specification
+class AttributeName implements Specification
 {
-    public function __construct(private int $targert)
+    public function __construct(private string $name)
     {
     }
 
     public function isSatisfiedBy(ParsedAttribute $attribute): bool
     {
-        return (bool) ($attribute->attribute()->getTarget() & $this->targert);
+        return $attribute->attribute()->getName() === $this->name;
     }
 }
