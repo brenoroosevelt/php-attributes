@@ -53,8 +53,8 @@ Explaining parameters in detail :
 <?php
 use BrenoRoosevelt\PhpAttributes\Attributes;
 
-$attributes 
-    = Attributes::fromClass(
+$attributes = 
+     Attributes::fromClass(
         // classes: string or an array of className
         [MyClass::class, Another_Class::class],
         
