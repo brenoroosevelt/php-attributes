@@ -8,6 +8,7 @@ use BrenoRosevelt\PhpAttributes\AttributesFactory;
 use BrenoRosevelt\PhpAttributes\Tests\Fixture\Attr1;
 use BrenoRosevelt\PhpAttributes\Tests\Fixture\Attr2;
 use BrenoRosevelt\PhpAttributes\Tests\Fixture\Stub;
+use FlexFqcnFinder\Filter\Filter;
 use FlexFqcnFinder\Filter\Specifications\Apply;
 use FlexFqcnFinder\Filter\Specifications\IsInstantiable;
 use FlexFqcnFinder\Fqcn;
@@ -114,9 +115,7 @@ class AttributesFactoryTest extends TestCase
     {
         $attributes = AttributesFactory::fromFqcnFinder(
             Fqcn::fromDir(__DIR__, true)
-                ->withFilter(
-                    new Apply(fn(string $fcqn) => $fcqn === Stub::class)
-                )
+                ->withFilter(Filter::by()->hasMethod('foo'))
         );
 
         $this->assertEquals(10, $attributes->count());
