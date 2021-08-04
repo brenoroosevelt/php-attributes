@@ -55,8 +55,8 @@ use BrenoRoosevelt\PhpAttributes\Attributes;
 
 $attributes = 
      Attributes::fromClass(
-        // classes: string or an array of className
-        [MyClass::class, Another_Class::class],
+        // classes: object|string|array of className or object
+        [MyClass::class, Another_Class::class, $object],
         
         // target: where to search for attributes
         // default value is Attribute::TARGET_ALL (parse entire class)

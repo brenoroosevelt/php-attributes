@@ -105,6 +105,9 @@ class Attributes extends AttributesFactory implements IteratorAggregate, Countab
         return count($this->attributes);
     }
 
+    /**
+     * @return ParsedAttribute[]
+     */
     public function toArray(): array
     {
         return $this->attributes;
