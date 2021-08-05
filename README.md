@@ -46,20 +46,22 @@ foreach ($relfectionClass->getReflectionConstants() as $property) {
 
 $instances = array_map(fn(ReflectionAttribute $attr) => $attr->newInstance(), $attributes);
 ```
-With this package you can **simplify**: 
+With this package you can **simplify**:
+
 ```php
 <?php
 use BrenoRoosevelt\PhpAttributes\Attributes;
 
-$instances = Attributes::fromClass(MyClass::class)->instances();
+$instances = Attributes::from(MyClass::class)->instances();
 ```
 Explaining parameters in detail:
+
 ```php
 <?php
 use BrenoRoosevelt\PhpAttributes\Attributes;
 
 $attributes = 
-     Attributes::fromClass(
+     Attributes::from(
         // classes: object|string|array of className or object
         [MyClass::class, Another_Class::class, $object],
         
@@ -77,11 +79,12 @@ $attributes =
     );
 ```
 This will return a collection of [`ParsedAttribute`](src/ParsedAttribute.php).
+
 ```php
 <?php
 use BrenoRoosevelt\PhpAttributes\Attributes;
 
-$attributes = Attributes::fromClass(/** ... */);
+$attributes = Attributes::from(/** ... */);
 
 $attributes->attributes();                  // ReflectionAttribute[]
 $attributes->targets();                     // Reflection objects target by attributes
@@ -106,11 +109,12 @@ foreach ($attributes as $attr) {
 
 ```
 The collection is immutable and fluent:
+
 ```php
 <?php
 use BrenoRoosevelt\PhpAttributes\Attributes;
 
-$attributes = Attributes::fromClass(MyClass::class);
+$attributes = Attributes::from(MyClass::class);
 
 // Get all instances for MyAttr on class properties
 $attributes
@@ -120,7 +124,7 @@ $attributes
 
 // You can filter the collection (like above), but it's much better:
 // ... avoid parsing the entire class 
-$attributes = Attributes::fromClass(MyClass::class, Attribute::TARGET_PROPERTY, MyAttr::class);
+$attributes = Attributes::from(MyClass::class, Attribute::TARGET_PROPERTY, MyAttr::class);
 $attributes->instances();
 ```
 
@@ -133,7 +137,7 @@ use BrenoRoosevelt\PhpAttributes\Specification\Criteria;
 use BrenoRoosevelt\PhpAttributes\Specification\AttributeTarget;
 use BrenoRoosevelt\PhpAttributes\Specification\TargetMatchType;
 
-$attributes = Attributes::fromClass(MyClass::class);
+$attributes = Attributes::from(MyClass::class);
 
 $attributes
     ->where(

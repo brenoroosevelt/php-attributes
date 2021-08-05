@@ -22,7 +22,7 @@ class AttributesFactoryTest extends TestCase
     /** @test */
     public function shouldExtractFromClass()
     {
-        $attributes = AttributesFactory::fromClass(Stub::class, Attribute::TARGET_CLASS);
+        $attributes = (new AttributesFactory)->fromClass(Stub::class);
         $this->assertEquals(2, $attributes->count());
         $this->assertTrue($attributes->hasAttribute(Attr1::class));
         $this->assertTrue($attributes->hasAttribute(Attr2::class));
@@ -35,7 +35,7 @@ class AttributesFactoryTest extends TestCase
     /** @test */
     public function shouldExtractFromConstants()
     {
-        $attributes = AttributesFactory::fromClass(Stub::class, Attribute::TARGET_CLASS_CONSTANT);
+        $attributes = (new AttributesFactory)->fromConstants(Stub::class);
         $this->assertEquals(2, $attributes->count());
         $this->assertTrue($attributes->hasAttribute(Attr1::class));
         $this->assertTrue($attributes->hasAttribute(Attr2::class));
@@ -48,7 +48,7 @@ class AttributesFactoryTest extends TestCase
     /** @test */
     public function shouldExtractFromProperty()
     {
-        $attributes = AttributesFactory::fromClass(Stub::class, Attribute::TARGET_PROPERTY);
+        $attributes = (new AttributesFactory)->fromProperties(Stub::class);
         $this->assertEquals(2, $attributes->count());
         $this->assertTrue($attributes->hasAttribute(Attr1::class));
         $this->assertTrue($attributes->hasAttribute(Attr2::class));
@@ -61,7 +61,7 @@ class AttributesFactoryTest extends TestCase
     /** @test */
     public function shouldExtractFromMethods()
     {
-        $attributes = AttributesFactory::fromClass(Stub::class, Attribute::TARGET_METHOD);
+        $attributes = (new AttributesFactory)->fromMethods(Stub::class);
         $this->assertEquals(2, $attributes->count());
         $this->assertTrue($attributes->hasAttribute(Attr1::class));
         $this->assertTrue($attributes->hasAttribute(Attr2::class));
@@ -74,7 +74,7 @@ class AttributesFactoryTest extends TestCase
     /** @test */
     public function shouldExtractFromParameters()
     {
-        $attributes = AttributesFactory::fromClass(Stub::class, Attribute::TARGET_PARAMETER);
+        $attributes = (new AttributesFactory)->fromParameters(Stub::class);
         $this->assertEquals(2, $attributes->count());
         $this->assertTrue($attributes->hasAttribute(Attr1::class));
         $this->assertTrue($attributes->hasAttribute(Attr2::class));
@@ -87,7 +87,7 @@ class AttributesFactoryTest extends TestCase
     /** @test */
     public function shouldExtractAllAttributes()
     {
-        $attributes = AttributesFactory::fromClass(Stub::class);
+        $attributes = (new AttributesFactory)->from(Stub::class);
         $this->assertEquals(10, $attributes->count());
         $this->assertTrue($attributes->hasAttribute(Attr1::class));
         $this->assertTrue($attributes->hasAttribute(Attr2::class));
@@ -112,7 +112,7 @@ class AttributesFactoryTest extends TestCase
     /** @test */
     public function shouldExtractFromFqcnFinder()
     {
-        $attributes = AttributesFactory::fromFqcnFinder(
+        $attributes = (new AttributesFactory)->fromFqcnFinder(
             Fqcn::fromDir(__DIR__, true)
                 ->withFilter(Filter::by()->hasMethod('foo'))
         );

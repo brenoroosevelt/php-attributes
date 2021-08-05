@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace BrenoRoosevelt\PhpAttributes;
 
 use ArrayIterator;
+use Attribute;
 use BrenoRoosevelt\PhpAttributes\Specification\AttributeName;
 use BrenoRoosevelt\PhpAttributes\Specification\AttributeTarget;
 use Countable;
@@ -13,7 +14,7 @@ use function array_filter;
 use function array_map;
 use function count;
 
-class Attributes extends AttributesFactory implements IteratorAggregate, Countable
+class Attributes implements IteratorAggregate, Countable
 {
     /** @var ParsedAttribute[] */
     private array $attributes;
@@ -23,9 +24,34 @@ class Attributes extends AttributesFactory implements IteratorAggregate, Countab
         $this->attributes = $attributes;
     }
 
+    public static function from(
+        object|string|array $class,
+        int $target = Attribute::TARGET_ALL,
+        string $attribute = null,
+        int $flags = 0
+    ): Attributes {
+        return (new AttributesFactory)->from($class, $target, $attribute, $flags);
+    }
+
     public function filter(callable $fn): self
     {
         return new self(...array_filter($this->attributes, $fn));
+    }
+
+    public function merge(self $attributes) :self
+    {
+        $merged = array_merge($this->attributes, $attributes->attributes);
+        return new self(...$merged);
+    }
+
+    public function add(ParsedAttribute ...$attributes) :self
+    {
+        $new = $this->attributes;
+        foreach ($attributes as $attribute) {
+            $new[] = $attribute;
+        }
+
+        return new self(...$new);
     }
 
     public function where(Specification $specification): self
