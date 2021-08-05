@@ -143,7 +143,7 @@ $attributes
     ->where(
         Criteria::and(
             new AttributeTarget(Attribute::TARGET_PROPERTY), 
-            new TargetMatchType(AnyClassType::class) // or primitives 'int', 'float', ...
+            new TargetMatchType(AnyClassType::class) // or primitives 'integer', 'float', ...
         )
     )
     ->instances();
