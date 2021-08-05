@@ -28,14 +28,10 @@ class AttributesFactory
     ): Attributes {
         $collection = new Attributes();
 
-        if (is_string($objectOrClass) || is_object($objectOrClass)) {
-            $objectOrClass = $this->reflectionClass($objectOrClass);
-        }
-
         $classes =
             is_array($objectOrClass) ?
                 array_map(fn($class) => $this->reflectionClass($class), $objectOrClass) :
-                [$objectOrClass];
+                [$this->reflectionClass($objectOrClass)];
 
         foreach ($classes as $objectOrClass) {
             if (Attribute::TARGET_CLASS & $target) {
