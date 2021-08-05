@@ -11,6 +11,7 @@ use BrenoRoosevelt\PhpAttributes\Tests\Fixture\Stub;
 use BrenoRoosevelt\PhpAttributes\Tests\Fixture\StubInterface;
 use BrenoRoosevelt\PhpAttributes\Tests\TestCase;
 use ReflectionClass;
+use stdClass;
 
 class SpecificationTest extends TestCase
 {
@@ -148,5 +149,43 @@ class SpecificationTest extends TestCase
 
         $spec = new Specification\TargetMatchType('string');
         $this->assertTrue($spec->isSatisfiedBy($parsedAttribute));
+    }
+
+    public function testTargetMethodTypeHint()
+    {
+        $target = (new ReflectionClass(Stub::class))->getMethod('foo');
+        $attribute = $target->getAttributes(Attr1::class)[0];
+        $parsedAttribute = new ParsedAttribute($attribute, $target);
+
+        $spec = new Specification\TargetMatchType('null');
+        $this->assertTrue($spec->isSatisfiedBy($parsedAttribute));
+
+        $spec = new Specification\TargetMatchType('float');
+        $this->assertTrue($spec->isSatisfiedBy($parsedAttribute));
+
+        $spec = new Specification\TargetMatchType(stdClass::class);
+        $this->assertTrue($spec->isSatisfiedBy($parsedAttribute));
+
+        $spec = new Specification\TargetMatchType(StubInterface::class);
+        $this->assertTrue($spec->isSatisfiedBy($parsedAttribute));
+
+        $spec = new Specification\TargetMatchType('string');
+        $this->assertFalse($spec->isSatisfiedBy($parsedAttribute));
+    }
+
+    public function testTargetConstantTypeHint()
+    {
+        $target = (new ReflectionClass(Stub::class))->getReflectionConstants()[0];
+        $attribute = $target->getAttributes(Attr1::class)[0];
+        $parsedAttribute = new ParsedAttribute($attribute, $target);
+
+        $spec = new Specification\TargetMatchType('integer');
+        $this->assertTrue($spec->isSatisfiedBy($parsedAttribute));
+
+        $spec = new Specification\TargetMatchType('null');
+        $this->assertFalse($spec->isSatisfiedBy($parsedAttribute));
+
+        $spec = new Specification\TargetMatchType('string');
+        $this->assertFalse($spec->isSatisfiedBy($parsedAttribute));
     }
 }
