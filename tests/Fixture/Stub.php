@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace BrenoRoosevelt\PhpAttributes\Tests\Fixture;
 
+use stdClass;
+
 #[Attr1('targetClass1')]
 #[Attr2('targetClass2')]
 class Stub
@@ -13,7 +15,7 @@ class Stub
 
     #[Attr1('targetProperty1')]
     #[Attr2('targetProperty2')]
-    private int $x;
+    private int|self $x;
 
     #[Attr2('targetMethod1')]
     #[Attr1('targetMethod2')]
@@ -21,6 +23,7 @@ class Stub
         #[Attr1('targetParameter1')]
         #[Attr2('targetParameter2')]
         string $k
-    ){
+    ): float|stdClass|null {
+        return 0.0;
     }
 }
