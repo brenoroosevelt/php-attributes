@@ -20,7 +20,7 @@
     </include>
   </coverage>
   <testsuites>
-    <testsuite name="App Test Suite">
+    <testsuite name="Project Test Suite">
       <directory>./tests/</directory>
     </testsuite>
   </testsuites>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="App Coding Standard">
-    <description>App Coding Standard</description>
+<ruleset name="Project Coding Standard">
+    <description>Coding Standard</description>
     <arg name="basepath" value="."/>
     <rule ref="PSR1"/>
     <rule ref="PSR2"/>

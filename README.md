@@ -79,18 +79,18 @@ use BrenoRoosevelt\PhpAttributes\Attributes;
 $attributes = Attributes::fromClass(/** ... */);
 
 $attributes->attributes();                  // ReflectionAttribute[]
+$attributes->targets();                     // Reflection objects target by attributes
+$attributes->instances();                   // array of attributes instances
 $attributes->count();                       // int
 $attributes->isEmpty();                     // bool
 $attributes->hasAttribute(MyAttr::class);   // bool
 $attributes->hasMany(MyAttr::class);        // bool
 $attributes->first();                       // (object) ParsedAttribute
-$attributes->filter($callable);             // new collection 
-$attributes->instances();                   // array of attributes instances
 $attributes->firstInstance($defaultValue);  // instance of first parsed attribute
-$attributes->targets();                     // Reflection objects target by attributes
+$attributes->filter($callable);             // new collection 
 $attributes->whereAttribute(MyAttr::class); // new collection filtered by attribute name
-$attributes->toArray();                     // ParsedAttribute[]
 $attributes->whereTarget(Attribute::TARGET_CLASS); // new collection filtered by target
+$attributes->toArray();                     // ParsedAttribute[]
 
 // Iterable
 foreach ($attributes as $attr) {
