@@ -145,16 +145,21 @@ $attributes
     ->instances();
 ```
 
-## Run test suite
+## Contributing
+
+### Run test suite
 ```bash
 composer test
 ```
 
-## Run analysis
-* Test Suit
-* Static Analyse
+### Run analysis
+* Test suite
+* Static analysis
 * Coding Standard
 
 ```bash
 composer check
 ```
+## License
+
+This project is licensed under the terms of the MIT license. See the [LICENSE](LICENSE.md) file for license rights and limitations.
