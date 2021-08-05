@@ -6,6 +6,7 @@ namespace BrenoRoosevelt\PhpAttributes\Specification;
 use ReflectionClass;
 use ReflectionClassConstant;
 use ReflectionFunctionAbstract;
+use ReflectionMethod;
 use ReflectionNamedType;
 use ReflectionParameter;
 use ReflectionProperty;
@@ -44,7 +45,11 @@ class Reflector
             }
 
             $typeHint = ltrim($type->getName(), "?");
-            if ($typeHint === 'self') {
+            if ($typeHint === 'self' &&
+                ($subject instanceof ReflectionMethod ||
+                $subject instanceof ReflectionProperty ||
+                $subject instanceof ReflectionParameter)
+            ) {
                 $typeHint = $subject->getDeclaringClass()->getName();
             }
 
