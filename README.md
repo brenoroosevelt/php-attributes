@@ -1,4 +1,9 @@
-# PHP Attributes Extractor
+# PHP Attributes
+[![Build](https://github.com/brenoroosevelt/habemus/actions/workflows/ci.yml/badge.svg)](https://github.com/brenoroosevelt/php-attributes/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/brenoroosevelt/habemus/branch/main/graph/badge.svg?token=S1QBA18IBX)](https://codecov.io/gh/brenoroosevelt/php-attributes)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/brenoroosevelt/habemus/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/brenoroosevelt/php-attributes/?branch=main)
+[![Latest Version](https://img.shields.io/github/release/brenoroosevelt/habemus.svg?style=flat)](https://github.com/brenoroosevelt/php-attributes/releases)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE.md)
 
 Easy way to extract and handle PHP Attributes.
 
