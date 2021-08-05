@@ -143,24 +143,10 @@ class SpecificationTest extends TestCase
         $attribute = $target->getAttributes(Attr1::class)[0];
         $parsedAttribute = new ParsedAttribute($attribute, $target);
 
-        $spec = new Specification\TargetIsSubclassOf(StubInterface::class);
+        $spec = new Specification\TargetMatchType(StubInterface::class);
         $this->assertFalse($spec->isSatisfiedBy($parsedAttribute));
 
         $spec = new Specification\TargetMatchType('string');
         $this->assertTrue($spec->isSatisfiedBy($parsedAttribute));
-    }
-
-    public function testTargetIsSubClassOf()
-    {
-        $target = (new ReflectionClass(Stub::class))->getMethod('foo');
-        $attribute = $target->getAttributes(Attr1::class)[0];
-        $parsedAttribute = new ParsedAttribute($attribute, $target);
-
-        $spec = new Specification\TargetIsSubclassOf(StubInterface::class);
-
-        $this->assertTrue($spec->isSatisfiedBy($parsedAttribute));
-
-        $spec = new Specification\TargetIsSubclassOf('string');
-        $this->assertFalse($spec->isSatisfiedBy($parsedAttribute));
     }
 }
