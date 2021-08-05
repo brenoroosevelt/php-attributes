@@ -134,18 +134,17 @@ class SpecificationTest extends TestCase
         $this->assertFalse($spec->isSatisfiedBy($parsedAttribute));
     }
 
-    public function testTargetMatchTypeMethod()
+    public function testTargetParameterTypeHint()
     {
-        $target = (new ReflectionClass(Stub::class))->getMethod('foo');
+        $target = (new ReflectionClass(Stub::class))->getMethod('foo')->getParameters()[0];
         $attribute = $target->getAttributes(Attr1::class)[0];
         $parsedAttribute = new ParsedAttribute($attribute, $target);
 
-        $spec = new Specification\TargetMatchType('float');
-
-        $this->assertTrue($spec->isSatisfiedBy($parsedAttribute));
+        $spec = new Specification\TargetIsSubclassOf(StubInterface::class);
+        $this->assertFalse($spec->isSatisfiedBy($parsedAttribute));
 
         $spec = new Specification\TargetMatchType('string');
-        $this->assertFalse($spec->isSatisfiedBy($parsedAttribute));
+        $this->assertTrue($spec->isSatisfiedBy($parsedAttribute));
     }
 
     public function testTargetIsSubClassOf()
