@@ -23,7 +23,7 @@ class Stub
         #[Attr1('targetParameter1')]
         #[Attr2('targetParameter2')]
         string $k
-    ): float|stdClass|null {
+    ): float|stdClass|null|StubInterface {
         return 0.0;
     }
 }

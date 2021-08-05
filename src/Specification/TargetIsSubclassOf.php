@@ -24,7 +24,7 @@ class TargetIsSubclassOf implements Specification
         ) {
             $types = Reflector::getTypeHint($target, false);
             foreach ($types as $type) {
-                if (is_subclass_of($type, $this->class, true)) {
+                if (is_a($type, $this->class, true)) {
                     return true;
                 }
             }

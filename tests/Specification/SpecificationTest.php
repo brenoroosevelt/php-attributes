@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace BrenoRoosevelt\PhpAttributes\Tests\Specification;
 
-
 use BrenoRoosevelt\PhpAttributes\ParsedAttribute;
 use BrenoRoosevelt\PhpAttributes\Specification;
 use BrenoRoosevelt\PhpAttributes\Tests\Fixture\Attr1;
+use BrenoRoosevelt\PhpAttributes\Tests\Fixture\Attr2;
 use BrenoRoosevelt\PhpAttributes\Tests\Fixture\Stub;
+use BrenoRoosevelt\PhpAttributes\Tests\Fixture\StubInterface;
 use BrenoRoosevelt\PhpAttributes\Tests\TestCase;
-use FlexFqcnFinder\Filter\Specifications\AlwaysTrue;
 use ReflectionClass;
 
 class SpecificationTest extends TestCase
@@ -90,5 +90,75 @@ class SpecificationTest extends TestCase
 
         $not = Specification\Criteria::not($this->alwaysTrue());
         $this->assertFalse($not->isSatisfiedBy($this->newParsedAttribute()));
+    }
+
+    public function testAttributeName()
+    {
+        $spec = new Specification\AttributeName(Attr1::class);
+        $this->assertTrue($spec->isSatisfiedBy($this->newParsedAttribute()));
+        $spec = new Specification\AttributeName(Attr2::class);
+        $this->assertFalse($spec->isSatisfiedBy($this->newParsedAttribute()));
+    }
+
+    public function testAttributeTarget()
+    {
+        $spec = new Specification\AttributeTarget(\Attribute::TARGET_CLASS);
+        $this->assertTrue($spec->isSatisfiedBy($this->newParsedAttribute()));
+        $spec = new Specification\AttributeTarget(\Attribute::TARGET_METHOD);
+        $this->assertFalse($spec->isSatisfiedBy($this->newParsedAttribute()));
+    }
+
+    public function testMethodName()
+    {
+        $target = (new ReflectionClass(Stub::class))->getMethod('foo');
+        $attribute = $target->getAttributes(Attr1::class)[0];
+        $parsedAttribute = new ParsedAttribute($attribute, $target);
+
+        $spec = new Specification\MethodName('foo');
+        $this->assertTrue($spec->isSatisfiedBy($parsedAttribute));
+        $spec = new Specification\MethodName('bar');
+        $this->assertFalse($spec->isSatisfiedBy($parsedAttribute));
+    }
+
+    public function testTargetMatchTypeProperty()
+    {
+        $target = (new ReflectionClass(Stub::class))->getProperty('x');
+        $attribute = $target->getAttributes(Attr1::class)[0];
+        $parsedAttribute = new ParsedAttribute($attribute, $target);
+
+        $spec = new Specification\TargetMatchType(Stub::class);
+
+        $this->assertTrue($spec->isSatisfiedBy($parsedAttribute));
+
+        $spec = new Specification\TargetMatchType('float');
+        $this->assertFalse($spec->isSatisfiedBy($parsedAttribute));
+    }
+
+    public function testTargetMatchTypeMethod()
+    {
+        $target = (new ReflectionClass(Stub::class))->getMethod('foo');
+        $attribute = $target->getAttributes(Attr1::class)[0];
+        $parsedAttribute = new ParsedAttribute($attribute, $target);
+
+        $spec = new Specification\TargetMatchType('float');
+
+        $this->assertTrue($spec->isSatisfiedBy($parsedAttribute));
+
+        $spec = new Specification\TargetMatchType('string');
+        $this->assertFalse($spec->isSatisfiedBy($parsedAttribute));
+    }
+
+    public function testTargetIsSubClassOf()
+    {
+        $target = (new ReflectionClass(Stub::class))->getMethod('foo');
+        $attribute = $target->getAttributes(Attr1::class)[0];
+        $parsedAttribute = new ParsedAttribute($attribute, $target);
+
+        $spec = new Specification\TargetIsSubclassOf(StubInterface::class);
+
+        $this->assertTrue($spec->isSatisfiedBy($parsedAttribute));
+
+        $spec = new Specification\TargetIsSubclassOf('string');
+        $this->assertFalse($spec->isSatisfiedBy($parsedAttribute));
     }
 }
