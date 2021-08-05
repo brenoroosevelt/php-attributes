@@ -7,7 +7,7 @@ use stdClass;
 
 #[Attr1('targetClass1')]
 #[Attr2('targetClass2')]
-class Stub
+class Stub implements StubInterface
 {
     #[Attr1('targetConstant1')]
     #[Attr2('targetConstant2')]

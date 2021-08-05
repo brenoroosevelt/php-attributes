@@ -128,7 +128,9 @@ class SpecificationTest extends TestCase
         $parsedAttribute = new ParsedAttribute($attribute, $target);
 
         $spec = new Specification\TargetMatchType(Stub::class);
+        $this->assertTrue($spec->isSatisfiedBy($parsedAttribute));
 
+        $spec = new Specification\TargetMatchType(StubInterface::class);
         $this->assertTrue($spec->isSatisfiedBy($parsedAttribute));
 
         $spec = new Specification\TargetMatchType('float');
