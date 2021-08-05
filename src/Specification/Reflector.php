@@ -10,15 +10,14 @@ use ReflectionMethod;
 use ReflectionNamedType;
 use ReflectionParameter;
 use ReflectionProperty;
+use ReflectionType;
 use ReflectionUnionType;
 
 class Reflector
 {
     public static function getTypeHint(\Reflector $subject): array
     {
-        if ($subject instanceof ReflectionClass) {
-            $type = $subject->getName();
-        } elseif ($subject instanceof ReflectionFunctionAbstract) {
+        if ($subject instanceof ReflectionFunctionAbstract) {
             $type = $subject->getReturnType();
         } elseif ($subject instanceof ReflectionParameter) {
             $type = $subject->getType();
@@ -26,6 +25,8 @@ class Reflector
             $type = $subject->getType();
         } elseif ($subject instanceof ReflectionClassConstant) {
             return [gettype($subject->getValue())];
+        } elseif ($subject instanceof ReflectionClass) {
+            return [$subject->getName()];
         } else {
             return [];
         }
