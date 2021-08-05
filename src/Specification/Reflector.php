@@ -9,6 +9,7 @@ use ReflectionFunctionAbstract;
 use ReflectionNamedType;
 use ReflectionParameter;
 use ReflectionProperty;
+use ReflectionUnionType;
 
 class Reflector
 {
@@ -33,7 +34,7 @@ class Reflector
 
         if ($type instanceof ReflectionNamedType) {
             $types[] = $type;
-        } elseif (is_a($type, 'ReflectionUnionType', true)) {
+        } elseif ($type instanceof ReflectionUnionType) {
             $types = $type->getTypes();
         }
 
