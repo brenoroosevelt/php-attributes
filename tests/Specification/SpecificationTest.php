@@ -79,4 +79,16 @@ class SpecificationTest extends TestCase
         $not = new Specification\Not($this->alwaysFalse());
         $this->assertTrue($not->isSatisfiedBy($this->newParsedAttribute()));
     }
+
+    public function testCriteria()
+    {
+        $not = Specification\Criteria::and($this->alwaysFalse(), $this->alwaysTrue());
+        $this->assertFalse($not->isSatisfiedBy($this->newParsedAttribute()));
+
+        $not = Specification\Criteria::or($this->alwaysFalse(), $this->alwaysTrue());
+        $this->assertTrue($not->isSatisfiedBy($this->newParsedAttribute()));
+
+        $not = Specification\Criteria::not($this->alwaysTrue());
+        $this->assertFalse($not->isSatisfiedBy($this->newParsedAttribute()));
+    }
 }
