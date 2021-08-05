@@ -132,6 +132,9 @@ class SpecificationTest extends TestCase
 
         $spec = new Specification\TargetMatchType('float');
         $this->assertFalse($spec->isSatisfiedBy($parsedAttribute));
+
+        $spec = new Specification\TargetMatchType('float');
+        $this->assertFalse($spec->isSatisfiedBy($this->newParsedAttribute()));
     }
 
     public function testTargetParameterTypeHint()
