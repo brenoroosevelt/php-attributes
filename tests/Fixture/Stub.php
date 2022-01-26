@@ -17,6 +17,16 @@ class Stub implements StubInterface
     #[Attr2('targetProperty2')]
     private int|self $x;
 
+    #[Attr1('targetConstructor1')]
+    #[Attr2('targetConstructor2')]
+    public function __construct(
+        #[Attr1('targetConstructorParamX')]
+        int $x = 0,
+        #[Attr1('targetConstructorParamY')]
+        int $y = 1
+    ) {
+    }
+
     #[Attr2('targetMethod1')]
     #[Attr1('targetMethod2')]
     protected function foo(

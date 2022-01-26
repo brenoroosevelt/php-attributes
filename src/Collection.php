@@ -36,29 +36,20 @@ class Collection implements IteratorAggregate, Countable
     }
 
     /** @return object[] */
-    public function instances(): array
+    public function getInstances(): array
     {
-        return array_map(
-            fn(ParsedAttribute $attribute) => $attribute->attribute()->newInstance(),
-            $this->data
-        );
+        return array_map(fn(ParsedAttribute $attribute) => $attribute->attribute()->newInstance(), $this->data);
     }
 
     /** @return ReflectionAttribute[] */
-    public function attributes(): array
+    public function getAttributes(): array
     {
-        return array_map(
-            fn(ParsedAttribute $attribute) => $attribute->attribute(),
-            $this->data
-        );
+        return array_map(fn(ParsedAttribute $attribute) => $attribute->attribute(), $this->data);
     }
 
-    public function targets(): array
+    public function getTargets(): array
     {
-        return array_map(
-            fn(ParsedAttribute $attribute) => $attribute->target(),
-            $this->data
-        );
+        return array_map(fn(ParsedAttribute $attribute) => $attribute->target(), $this->data);
     }
 
     public function isEmpty(): bool
@@ -71,9 +62,7 @@ class Collection implements IteratorAggregate, Countable
         return count($this->data);
     }
 
-    /**
-     * @return ParsedAttribute[]
-     */
+    /** @return ParsedAttribute[] */
     public function toArray(): array
     {
         return $this->data;

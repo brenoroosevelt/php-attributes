@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace BrenoRoosevelt\PhpAttributes\Tests;
 
+use BrenoRoosevelt\PhpAttributes\Attributes;
 use BrenoRoosevelt\PhpAttributes\ParsedAttribute;
 use BrenoRoosevelt\PhpAttributes\Tests\Fixture\Stub;
 use ReflectionClass;

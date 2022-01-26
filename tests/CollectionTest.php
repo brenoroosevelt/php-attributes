@@ -14,7 +14,7 @@ use ReflectionProperty;
 class CollectionTest extends TestCase
 {
     /** @test */
-    public function shouldMergerCollection()
+    public function shouldMergeCollection()
     {
         $collection1 = new Collection(Fixtures::attr1());
         $collection2 = new Collection(Fixtures::attr2());
@@ -53,7 +53,7 @@ class CollectionTest extends TestCase
     public function shouldGetInstances()
     {
         $collection = new Collection(Fixtures::attr1(), Fixtures::attr2());
-        $instances = $collection->instances();
+        $instances = $collection->getInstances();
         $this->assertCount(2, $instances);
         $this->assertInstanceOf(Attr1::class, $instances[0]);
         $this->assertInstanceOf(Attr2::class, $instances[1]);
@@ -63,7 +63,7 @@ class CollectionTest extends TestCase
     public function shouldGetReflectionAttributes()
     {
         $collection = new Collection(Fixtures::attr1(), Fixtures::attr2());
-        $attributes = $collection->attributes();
+        $attributes = $collection->getAttributes();
         $this->assertCount(2, $attributes);
         $this->assertContainsOnlyInstancesOf(ReflectionAttribute::class, $attributes);
     }
@@ -72,7 +72,7 @@ class CollectionTest extends TestCase
     public function shouldGetTargets()
     {
         $collection = new Collection(Fixtures::attr1(), Fixtures::attr2());
-        $targets = $collection->targets();
+        $targets = $collection->getTargets();
         $this->assertCount(2, $targets);
         $this->assertContainsOnlyInstancesOf(ReflectionProperty::class, $targets);
     }
