@@ -50,9 +50,9 @@ With this package you can **simplify**:
 
 ```php
 <?php
-use BrenoRoosevelt\PhpAttributes\Collection;
+use BrenoRoosevelt\PhpAttributes\Attributes;
 
-$instances = Collection::from(MyClass::class)->instances();
+$instances = Attributes::extract(MyAttr::class)->fromClass(MyClass::class)->getInstances();
 ```
 Explaining parameters in detail:
 
@@ -60,47 +60,43 @@ Explaining parameters in detail:
 <?php
 use BrenoRoosevelt\PhpAttributes\Collection;
 
-$attributes = 
-     Collection::from(
-        // classes: object|string|array of className or object
-        [MyClass::class, Another_Class::class, $object],
-        
-        // target: where to search for attributes
-        // default value is Attribute::TARGET_ALL (parse entire class)
-        Attribute::TARGET_METHOD|Attribute::TARGET_PROPERTY,  
-        
-        // attribute: the attribute name (string)
+$extract = 
+     Attributes::extract(
+        // $attribute: the attribute name (string)
         // default values is NULL (search for all attributes)
-        MyAttribute::class, 
+        Attribute::class,
         
-        // flags: flags to filter attributes.     
+        // $flag: flags to filter attributes.     
         // default values is 0 (no filter will be applied)
         ReflectionAttribute::IS_INSTANCEOF
     );
 ```
-This will return a collection of [`ParsedAttribute`](src/ParsedAttribute.php).
+ * `fromClass(string|object|array $objectOrClass): Collection`
+ * `fromProperties(string|object|array $objectOrClass, string ...$property)`
+ * `fromMethods(string|object|array $objectOrClass, string ...$method)`
+ * `fromClassConstants(string|object|array $objectOrClass, string ...$constant)`
+ * `fromParameters(string|object|array $objectOrClass, string $method, string ...$parameter)`
+ * `fromConstructor(string|object|array $objectOrClass)`
+ * `fromConstructorParameters(string|object|array $objectOrClass, string ...$parameter)`
+
+All these methods will return a collection of [`ParsedAttribute`](src/ParsedAttribute.php).
 
 ```php
 <?php
-use BrenoRoosevelt\PhpAttributes\Collection;
+/* $attributes = Attributes::extract()->from... */ 
 
-$attributes = Collection::from(/** ... */);
+// Collection
+$attributes->add(new ParsedAttribute(...)) // new Collection instance (immutable)
+$attributes->merge(new Collection);        // new Collection instance (immutable)
+$attributes->getInstances();               // object[] array with attributes instances
+$attributes->getTargets();                 // Reflector[] array with Reflection objects target by attributes
+$attributes->getAttributes();              // ReflectionAttribute[]
+$attributes->count();                      // int
+$attributes->isEmpty();                    // bool
+$attributes->first();                      // null|(object) ParsedAttribute
+$attributes->toArray();                    // ParsedAttribute[]
 
-$attributes->data();                  // ReflectionAttribute[]
-$attributes->targets();                     // Reflection objects target by attributes
-$attributes->instances();                   // array of attributes instances
-$attributes->count();                       // int
-$attributes->isEmpty();                     // bool
-$attributes->hasAttribute(MyAttr::class);   // bool
-$attributes->hasMany(MyAttr::class);        // bool
-$attributes->first();                       // (object) ParsedAttribute
-$attributes->firstInstance($defaultValue);  // instance of first parsed attribute
-$attributes->filter($callable);             // new collection 
-$attributes->whereAttribute(MyAttr::class); // new collection filtered by attribute name
-$attributes->whereTarget(Attribute::TARGET_CLASS); // new collection filtered by target
-$attributes->toArray();                     // ParsedAttribute[]
-
-// Iterable
+// Iterable (ParsedAttribute[])
 foreach ($attributes as $attr) {
     $attr->attribute(); // ReflectionAttribute
     $attr->target();    // ReflectionClass|ReflectionClassConstant|
@@ -109,45 +105,6 @@ foreach ($attributes as $attr) {
 
 ```
 The collection is immutable and fluent:
-
-```php
-<?php
-use BrenoRoosevelt\PhpAttributes\Collection;
-
-$attributes = Collection::from(MyClass::class);
-
-// Get all instances for MyAttr on class properties
-$attributes
-    ->whereTarget(Attribute::TARGET_PROPERTY)
-    ->whereAttribute(MyAttr::class)
-    ->instances();
-
-// You can filter the collection (like above), but it's much better:
-// ... avoid parsing the entire class 
-$attributes = Collection::from(MyClass::class, Attribute::TARGET_PROPERTY, MyAttr::class);
-$attributes->instances();
-```
-
-#### Filtering
-
-```php
-<?php
-use BrenoRoosevelt\PhpAttributes\Collection;
-use BrenoRoosevelt\PhpAttributes\Specification\Criteria;
-use BrenoRoosevelt\PhpAttributes\Specification\AttributeTarget;
-use BrenoRoosevelt\PhpAttributes\Specification\TargetMatchType;
-
-$attributes = Collection::from(MyClass::class);
-
-$attributes
-    ->where(
-        Criteria::and(
-            new AttributeTarget(Attribute::TARGET_PROPERTY), 
-            new TargetMatchType(AnyClassType::class) // or primitives 'integer', 'float', ...
-        )
-    )
-    ->instances();
-```
 
 ## Contributing
 
