@@ -3,7 +3,7 @@ version: '3.1'
 services:
   dev:
     container_name: php_attributes
-    image: webdevops/php-dev:8.0
+    image: webdevops/php-dev:8.1
     working_dir: /app
 
     volumes:

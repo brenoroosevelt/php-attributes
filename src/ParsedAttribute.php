@@ -14,8 +14,8 @@ use ReflectionProperty;
 final class ParsedAttribute
 {
     public function __construct(
-        private ReflectionAttribute $attribute,
-        private ReflectionClass|ReflectionClassConstant|ReflectionProperty|ReflectionMethod|ReflectionParameter $target
+        private readonly ReflectionAttribute $attribute,
+        private readonly ReflectionClass|ReflectionClassConstant|ReflectionProperty|ReflectionMethod|ReflectionParameter $target
     ) {
     }
 

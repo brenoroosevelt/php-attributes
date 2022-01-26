@@ -3,14 +3,10 @@ declare(strict_types=1);
 
 namespace BrenoRoosevelt\PhpAttributes\Tests;
 
-use Attribute;
 use BrenoRoosevelt\PhpAttributes\AttributesFactory;
-use BrenoRoosevelt\PhpAttributes\Specification\Reflector;
 use BrenoRoosevelt\PhpAttributes\Tests\Fixture\Attr1;
 use BrenoRoosevelt\PhpAttributes\Tests\Fixture\Attr2;
 use BrenoRoosevelt\PhpAttributes\Tests\Fixture\Stub;
-use FlexFqcnFinder\Filter\Filter;
-use FlexFqcnFinder\Fqcn;
 use ReflectionClass;
 use ReflectionClassConstant;
 use ReflectionMethod;
@@ -88,35 +84,6 @@ class AttributesFactoryTest extends TestCase
     public function shouldExtractAllAttributes()
     {
         $attributes = (new AttributesFactory)->from(Stub::class);
-        $this->assertEquals(10, $attributes->count());
-        $this->assertTrue($attributes->hasAttribute(Attr1::class));
-        $this->assertTrue($attributes->hasAttribute(Attr2::class));
-        $expected = [
-            'targetClass1',
-            'targetClass2',
-            'targetConstant1',
-            'targetConstant2',
-            'targetProperty1',
-            'targetProperty2',
-            'targetMethod1',
-            'targetMethod2',
-            'targetParameter1',
-            'targetParameter2',
-        ];
-
-        foreach ($attributes->instances() as $instance) {
-            $this->assertTrue(in_array($instance->id, $expected));
-        }
-    }
-
-    /** @test */
-    public function shouldExtractFromFqcnFinder()
-    {
-        $attributes = (new AttributesFactory)->fromFqcnFinder(
-            Fqcn::fromDir(__DIR__, true)
-                ->withFilter(Filter::by()->hasMethod('foo'))
-        );
-
         $this->assertEquals(10, $attributes->count());
         $this->assertTrue($attributes->hasAttribute(Attr1::class));
         $this->assertTrue($attributes->hasAttribute(Attr2::class));

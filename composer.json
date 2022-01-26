@@ -17,11 +17,10 @@
     }
   ],
   "require": {
-    "php": "^8",
-    "brenoroosevelt/flex-fqcn-finder": "^1"
+    "php": "^8.1"
   },
   "require-dev": {
-    "phpstan/phpstan": "^0.12.90",
+    "phpstan/phpstan": "^1",
     "phpunit/phpunit": "^9.0",
     "squizlabs/php_codesniffer": "3.5.*"
   },
