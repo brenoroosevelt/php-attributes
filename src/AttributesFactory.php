@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace BrenoRoosevelt\PhpAttributes;
 
-use FlexFqcnFinder\FqcnFinderInterface;
 use ReflectionClass;
 use ReflectionClassConstant;
 use ReflectionMethod;
@@ -156,15 +155,6 @@ class AttributesFactory
         }
 
         return $collection;
-    }
-
-    public function fromFqcnFinder(
-        FqcnFinderInterface $finder,
-        int $target = Attribute::TARGET_ALL,
-        string $attribute = null,
-        int $flags = 0
-    ): Attributes {
-        return $this->from($finder->find(), $target, $attribute, $flags);
     }
 
     protected function reflectionClass(object|string $objectOrClass): ReflectionClass

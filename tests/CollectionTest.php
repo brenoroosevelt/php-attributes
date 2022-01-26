@@ -15,7 +15,7 @@ use ReflectionClass;
 use ReflectionParameter;
 use stdClass;
 
-class AttributesTest extends TestCase
+class CollectionTest extends TestCase
 {
     /** @test */
     public function shouldFilterCollection()
