@@ -14,18 +14,8 @@ use ReflectionProperty;
 final class ParsedAttribute
 {
     public function __construct(
-        private readonly ReflectionAttribute $attribute,
-        private readonly ReflectionClass|ReflectionClassConstant|ReflectionProperty|ReflectionMethod|ReflectionParameter $target
+        public readonly ReflectionAttribute $attribute,
+        public readonly ReflectionClass|ReflectionClassConstant|ReflectionProperty|ReflectionMethod|ReflectionParameter $target
     ) {
-    }
-
-    public function attribute(): ReflectionAttribute
-    {
-        return $this->attribute;
-    }
-
-    public function target(): ReflectionClassConstant|ReflectionParameter|ReflectionMethod|ReflectionClass|ReflectionProperty
-    {
-        return $this->target;
     }
 }

@@ -38,18 +38,18 @@ class Collection implements IteratorAggregate, Countable
     /** @return object[] */
     public function getInstances(): array
     {
-        return array_map(fn(ParsedAttribute $attribute) => $attribute->attribute()->newInstance(), $this->data);
+        return array_map(fn(ParsedAttribute $attribute) => $attribute->attribute->newInstance(), $this->data);
     }
 
     /** @return ReflectionAttribute[] */
     public function getAttributes(): array
     {
-        return array_map(fn(ParsedAttribute $attribute) => $attribute->attribute(), $this->data);
+        return array_map(fn(ParsedAttribute $attribute) => $attribute->attribute, $this->data);
     }
 
     public function getTargets(): array
     {
-        return array_map(fn(ParsedAttribute $attribute) => $attribute->target(), $this->data);
+        return array_map(fn(ParsedAttribute $attribute) => $attribute->target, $this->data);
     }
 
     public function isEmpty(): bool

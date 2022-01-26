@@ -17,7 +17,7 @@ class ParsedAttributeTest extends TestCase
         $attribute = $target->getAttributes()[0];
         $parsedAttribute = new ParsedAttribute($attribute, $target);
 
-        $this->assertSame($attribute, $parsedAttribute->attribute());
-        $this->assertSame($target, $parsedAttribute->target());
+        $this->assertSame($attribute, $parsedAttribute->attribute);
+        $this->assertSame($target, $parsedAttribute->target);
     }
 }

@@ -36,7 +36,7 @@ class CollectionTest extends TestCase
     {
         $collection = new Collection(Fixtures::attr2(), Fixtures::attr1());
         $first = $collection->first();
-        $this->assertEquals('data2', $first->target()->getName());
+        $this->assertEquals('data2', $first->target->getName());
     }
 
     /** @test */
