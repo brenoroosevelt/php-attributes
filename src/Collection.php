@@ -7,43 +7,27 @@ use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use ReflectionAttribute;
-use Traversable;
+use function array_map;
+use function count;
 
 class Collection implements IteratorAggregate, Countable
 {
     /** @var ParsedAttribute[] */
     private readonly array $data;
 
-    final public function __construct(ParsedAttribute ...$parsedAttribute)
+    final public function __construct(ParsedAttribute ...$attributes)
     {
-        $this->data = $parsedAttribute;
+        $this->data = $attributes;
     }
 
-    public function add(ParsedAttribute ...$parsedAttribute): self
+    public function add(ParsedAttribute ...$attributes) :self
     {
-        return new self(...$this->data, ...$parsedAttribute);
+        return new self(...$this->data, ...$attributes);
     }
 
-    public function merge(Collection $collection): self
+    public function merge(Collection $collection) :self
     {
         return new self(...$this->data, ...$collection->data);
-    }
-
-    /** @return ReflectionAttribute[] */
-    public function attributes(): array
-    {
-        return array_map(fn(ParsedAttribute $attribute) => $attribute->attribute(), $this->data);
-    }
-
-    /** @return object[] */
-    public function instances(): array
-    {
-        return array_map(fn(ParsedAttribute $attribute) => $attribute->attribute()->newInstance(), $this->data);
-    }
-
-    public function targets(): array
-    {
-        return array_map(fn(ParsedAttribute $attribute) => $attribute->target(), $this->data);
     }
 
     public function first(): ?ParsedAttribute
@@ -51,23 +35,52 @@ class Collection implements IteratorAggregate, Countable
         return $this->data[0] ?? null;
     }
 
+    /** @return object[] */
+    public function instances(): array
+    {
+        return array_map(
+            fn(ParsedAttribute $attribute) => $attribute->attribute()->newInstance(),
+            $this->data
+        );
+    }
+
+    /** @return ReflectionAttribute[] */
+    public function attributes(): array
+    {
+        return array_map(
+            fn(ParsedAttribute $attribute) => $attribute->attribute(),
+            $this->data
+        );
+    }
+
+    public function targets(): array
+    {
+        return array_map(
+            fn(ParsedAttribute $attribute) => $attribute->target(),
+            $this->data
+        );
+    }
+
     public function isEmpty(): bool
     {
-        return count($this->data) === 0;
-    }
-
-    public function toArray(): array
-    {
-        return $this->data;
-    }
-
-    public function getIterator(): Traversable
-    {
-        return new ArrayIterator($this->data);
+        return empty($this->data);
     }
 
     public function count(): int
     {
         return count($this->data);
+    }
+
+    /**
+     * @return ParsedAttribute[]
+     */
+    public function toArray(): array
+    {
+        return $this->data;
+    }
+
+    public function getIterator(): ArrayIterator
+    {
+        return new ArrayIterator($this->data);
     }
 }

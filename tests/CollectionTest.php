@@ -3,206 +3,102 @@ declare(strict_types=1);
 
 namespace BrenoRoosevelt\PhpAttributes\Tests;
 
-use Attribute;
-use BrenoRoosevelt\PhpAttributes\Attributes;
+use BrenoRoosevelt\PhpAttributes\Collection;
 use BrenoRoosevelt\PhpAttributes\ParsedAttribute;
-use BrenoRoosevelt\PhpAttributes\Specification\AttributeTarget;
 use BrenoRoosevelt\PhpAttributes\Tests\Fixture\Attr1;
 use BrenoRoosevelt\PhpAttributes\Tests\Fixture\Attr2;
-use BrenoRoosevelt\PhpAttributes\Tests\Fixture\Stub;
+use BrenoRoosevelt\PhpAttributes\Tests\Fixture\Fixtures;
 use ReflectionAttribute;
-use ReflectionClass;
-use ReflectionParameter;
-use stdClass;
+use ReflectionProperty;
 
 class CollectionTest extends TestCase
 {
     /** @test */
-    public function shouldFilterCollection()
-    {
-        $attributes = Attributes::from(Stub::class);
-
-        $attributes = $attributes->filter(fn(ParsedAttribute $attr) => $attr->target() instanceof ReflectionClass);
-
-        $this->assertEquals(2, $attributes->count());
-        foreach ($attributes as $attribute) {
-            $this->assertInstanceOf(ReflectionClass::class, $attribute->target());
-        }
-    }
-
-    /** @test */
     public function shouldMergerCollection()
     {
-        $attributes1 = Attributes::from(Stub::class, Attribute::TARGET_CLASS);
-        $attributes2 = Attributes::from(Stub::class, Attribute::TARGET_PROPERTY);
-
-        $attributes = $attributes1->merge($attributes2);
-
-        $this->assertEquals(4, $attributes->count());
-        $this->assertTrue($attributes->hasTarget(Attribute::TARGET_PROPERTY));
-        $this->assertTrue($attributes->hasTarget(Attribute::TARGET_CLASS));
+        $collection1 = new Collection(Fixtures::attr1());
+        $collection2 = new Collection(Fixtures::attr2());
+        $merged = $collection1->merge($collection2);
+        $this->assertEquals(2, $merged->count());
     }
 
     /** @test */
     public function shouldAddNewValue()
     {
-        $attributes = Attributes::from(Stub::class, Attribute::TARGET_PROPERTY);
-        $target = new ReflectionClass(Stub::class);
-        $attribute = $target->getAttributes()[0];
-        $parsedAttribute = new ParsedAttribute($attribute, $target);
-
-        $attributes = $attributes->add($parsedAttribute);
-
-        $this->assertEquals(3, $attributes->count());
-        $this->assertTrue($attributes->hasTarget(Attribute::TARGET_PROPERTY));
-        $this->assertTrue($attributes->hasTarget(Attribute::TARGET_CLASS));
-    }
-
-    /** @test */
-    public function shouldFilterWithSpecification()
-    {
-        $attributes = Attributes::from(Stub::class);
-        $attributes = $attributes->where(new AttributeTarget(Attribute::TARGET_PARAMETER));
-
-        $this->assertEquals(2, $attributes->count());
-        $this->assertContainsOnlyInstancesOf(ReflectionParameter::class, $attributes->targets());
-    }
-
-    /** @test */
-    public function shouldFilterAttribute()
-    {
-        $attributes = Attributes::from(Stub::class);
-        $attributes = $attributes->whereAttribute(Attr2::class);
-
-        $this->assertContainsOnlyInstancesOf(Attr2::class, $attributes->instances());
-    }
-
-    /** @test */
-    public function shouldFilterTarget()
-    {
-        $attributes = Attributes::from(Stub::class);
-        $attributes = $attributes->whereTarget(Attribute::TARGET_PARAMETER);
-
-        $this->assertContainsOnlyInstancesOf(ReflectionParameter::class, $attributes->targets());
+        $collection = new Collection(Fixtures::attr1());
+        $this->assertEquals(1, $collection->count());
+        $collection = $collection->add(Fixtures::attr2());
+        $this->assertEquals(2, $collection->count());
     }
 
     /** @test */
     public function shouldGetFirstElement()
     {
-        $attributes = Attributes::from(Stub::class);
-        $attributes = $attributes->first();
-
-        $this->assertEquals(1, $attributes->count());
-        $this->assertInstanceOf(ReflectionClass::class, $attributes->targets()[0]);
+        $collection = new Collection(Fixtures::attr2(), Fixtures::attr1());
+        $first = $collection->first();
+        $this->assertEquals('data2', $first->target()->getName());
     }
 
     /** @test */
     public function shouldCheckIsEmpty()
     {
-        $attributes = Attributes::from(Stub::class);
-        $this->assertFalse($attributes->isEmpty());
+        $collection = new Collection(Fixtures::attr1());
+        $this->assertFalse($collection->isEmpty());
 
-        $attributes = new Attributes();
-        $this->assertTrue($attributes->isEmpty());
+        $collection = new Collection();
+        $this->assertTrue($collection->isEmpty());
     }
 
     /** @test */
     public function shouldGetInstances()
     {
-        $attributes = Attributes::from(Stub::class, Attribute::TARGET_ALL, Attr1::class);
-        $this->assertCount(5, $attributes->instances());
-        $this->assertContainsOnlyInstancesOf(Attr1::class, $attributes->instances());
-    }
-
-    /** @test */
-    public function shouldGetFirstInstance()
-    {
-        $attributes = Attributes::from(Stub::class, Attribute::TARGET_ALL, Attr1::class);
-        $this->assertInstanceOf(Attr1::class, $attributes->firstInstance());
-    }
-
-    /** @test */
-    public function shouldGetFirstInstanceWithDefault()
-    {
-        $attributes = new Attributes();
-        $default = new stdClass();
-        $this->assertSame($default, $attributes->firstInstance($default));
+        $collection = new Collection(Fixtures::attr1(), Fixtures::attr2());
+        $instances = $collection->instances();
+        $this->assertCount(2, $instances);
+        $this->assertInstanceOf(Attr1::class, $instances[0]);
+        $this->assertInstanceOf(Attr2::class, $instances[1]);
     }
 
     /** @test */
     public function shouldGetReflectionAttributes()
     {
-        $attributes = Attributes::from(Stub::class);
-
-        $this->assertCount(10, $attributes->attributes());
-        $this->assertContainsOnlyInstancesOf(ReflectionAttribute::class, $attributes->attributes());
+        $collection = new Collection(Fixtures::attr1(), Fixtures::attr2());
+        $attributes = $collection->attributes();
+        $this->assertCount(2, $attributes);
+        $this->assertContainsOnlyInstancesOf(ReflectionAttribute::class, $attributes);
     }
 
     /** @test */
     public function shouldGetTargets()
     {
-        $attributes = Attributes::from(Stub::class);
-        $this->assertCount(10, $attributes->targets());
-    }
-
-    /** @test */
-    public function shouldCheckAttributes()
-    {
-        $attributes = Attributes::from(Stub::class);
-        $this->assertTrue($attributes->hasAttribute(Attr1::class));
-        $this->assertTrue($attributes->hasAttribute(Attr2::class));
-        $this->assertFalse($attributes->hasAttribute('other'));
-    }
-
-    /** @test */
-    public function shouldCheckTarget()
-    {
-        $attributes = Attributes::from(Stub::class, Attribute::TARGET_METHOD);
-        $this->assertTrue($attributes->hasTarget(Attribute::TARGET_METHOD));
-        $this->assertFalse($attributes->hasTarget(Attribute::TARGET_CLASS));
-    }
-
-    /** @test */
-    public function shouldCheckHasMany()
-    {
-        $attributes = Attributes::from(Stub::class);
-        $this->assertTrue($attributes->hasMany(Attr1::class));
-
-        $attributes = $attributes->first();
-        $this->assertTrue($attributes->hasAttribute(Attr1::class));
-        $this->assertFalse($attributes->hasMany(Attr1::class));
-    }
-
-    /** @test */
-    public function shouldCheckHasTarget()
-    {
-        $attributes = Attributes::from(Stub::class, Attribute::TARGET_METHOD);
-        $this->assertTrue($attributes->hasTarget(Attribute::TARGET_METHOD));
-        $this->assertFalse($attributes->hasTarget(Attribute::TARGET_PARAMETER));
+        $collection = new Collection(Fixtures::attr1(), Fixtures::attr2());
+        $targets = $collection->targets();
+        $this->assertCount(2, $targets);
+        $this->assertContainsOnlyInstancesOf(ReflectionProperty::class, $targets);
     }
 
     /** @test */
     public function shouldCountCollection()
     {
-        $attributes = Attributes::from(Stub::class);
-        $this->assertCount(10, $attributes);
-        $attributes = $attributes->filter(fn()=> false);
-        $this->assertCount(0, $attributes);
+        $collection1 = new Collection();
+        $collection2 = new Collection(Fixtures::attr1(), Fixtures::attr2());
+        $this->assertEquals(0, count($collection1));
+        $this->assertEquals(2, count($collection2));
     }
 
     /** @test */
     public function shouldGetArray()
     {
-        $attributes = Attributes::from(Stub::class);
-        $array = $attributes->toArray();
-        $this->assertCount(10, $array);
+        $collection = new Collection(Fixtures::attr1(), Fixtures::attr2());
+        $array = $collection->toArray();
+        $this->assertCount(2, $array);
         $this->assertContainsOnlyInstancesOf(ParsedAttribute::class, $array);
     }
 
     /** @test */
     public function shouldIterateCollection()
     {
-        $attributes = Attributes::from(Stub::class);
+        $attributes = new Collection(Fixtures::attr1(), Fixtures::attr2());
         foreach ($attributes as $attribute) {
             $this->assertInstanceOf(ParsedAttribute::class, $attribute);
         }

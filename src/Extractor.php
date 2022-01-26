@@ -5,5 +5,5 @@ namespace BrenoRoosevelt\PhpAttributes;
 
 interface Extractor
 {
-    public function extract(): Collection;
+    public function extract(): Collectionaaa;
 }

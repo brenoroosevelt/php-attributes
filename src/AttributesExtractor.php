@@ -21,10 +21,10 @@ class AttributesExtractor implements Extractor
     ) {
     }
 
-    public function extract(): Collection
+    public function extract(): Collectionaaa
     {
         return
-            new Collection(...array_map(
+            new Collectionaaa(...array_map(
                 fn(ReflectionAttribute $attribute) => new ParsedAttribute($attribute, $this->reflection),
                 $this->reflection->getAttributes($this->attribute, $this->flags)
             ));
@@ -35,7 +35,7 @@ class AttributesExtractor implements Extractor
         string $property,
         ?string $attribute = null,
         int $flags = 0
-    ): Collection {
+    ): Collectionaaa {
         return (new self(new ReflectionProperty($objectOrClass, $property), $attribute, $flags))->extract();
     }
 
@@ -44,8 +44,8 @@ class AttributesExtractor implements Extractor
         ?string $attribute = null,
         int $flags = 0,
         ?int $filter = null
-    ): Collection {
-        $collection = new Collection;
+    ): Collectionaaa {
+        $collection = new Collectionaaa;
         foreach ((new ReflectionClass($objectOrClass))->getProperties($filter) as $property) {
             $collection = $collection->merge((new self($property, $attribute, $flags))->extract());
         }
@@ -57,7 +57,7 @@ class AttributesExtractor implements Extractor
         string|object $objectOrClass,
         ?string $attribute = null,
         int $flags = 0
-    ): Collection {
+    ): Collectionaaa {
         return (new self(new ReflectionClass($objectOrClass), $attribute, $flags))->extract();
     }
 
@@ -65,8 +65,8 @@ class AttributesExtractor implements Extractor
         iterable $objectOrClasses,
         ?string $attribute = null,
         int $flags = 0
-    ): Collection {
-        $collection = new Collection;
+    ): Collectionaaa {
+        $collection = new Collectionaaa;
         foreach ($objectOrClasses as $objectOrClass) {
             $collection = $collection->merge(
                 (new self(new ReflectionClass($objectOrClass), $attribute, $flags))->extract()
@@ -81,7 +81,7 @@ class AttributesExtractor implements Extractor
         string $constant,
         ?string $attribute = null,
         int $flags = 0
-    ): Collection {
+    ): Collectionaaa {
         return (new self(new ReflectionClassConstant($objectOrClass, $constant), $attribute, $flags))->extract();
     }
 
@@ -90,8 +90,8 @@ class AttributesExtractor implements Extractor
         ?string $attribute = null,
         int $flags = 0,
         ?int $filter = null
-    ): Collection {
-        $collection = new Collection;
+    ): Collectionaaa {
+        $collection = new Collectionaaa;
         foreach ((new ReflectionClass($objectOrClass))->getReflectionConstants($filter) as $constant) {
             $collection = $collection->merge((new self($constant, $attribute, $flags))->extract());
         }
@@ -104,7 +104,7 @@ class AttributesExtractor implements Extractor
         string $method,
         ?string $attribute = null,
         int $flags = 0
-    ): Collection {
+    ): Collectionaaa {
         return (new self(new ReflectionMethod($objectOrClass, $method), $attribute, $flags))->extract();
     }
 
@@ -113,8 +113,8 @@ class AttributesExtractor implements Extractor
         ?string $attribute = null,
         int $flags = 0,
         ?int $filter = null
-    ): Collection {
-        $collection = new Collection;
+    ): Collectionaaa {
+        $collection = new Collectionaaa;
         foreach ((new ReflectionClass($objectOrClass))->getMethods($filter) as $method) {
             $collection = $collection->merge((new self($method, $attribute, $flags))->extract());
         }
@@ -127,8 +127,8 @@ class AttributesExtractor implements Extractor
         string $method,
         ?string $attribute = null,
         int $flags = 0
-    ): Collection {
-        $collection = new Collection;
+    ): Collectionaaa {
+        $collection = new Collectionaaa;
         foreach ((new ReflectionMethod($objectOrClass, $method))->getParameters() as $parameter) {
             $collection = $collection->merge((new self($parameter, $attribute, $flags))->extract());
         }
@@ -141,8 +141,8 @@ class AttributesExtractor implements Extractor
         ?string $attribute = null,
         int $flags = 0,
         ?int $filterMethod = null
-    ): Collection {
-        $collection = new Collection;
+    ): Collectionaaa {
+        $collection = new Collectionaaa;
         foreach ((new ReflectionClass($objectOrClass))->getMethods($filterMethod) as $method) {
             foreach ($method->getParameters() as $parameter) {
                 $collection = $collection->merge((new self($parameter, $attribute, $flags))->extract());
@@ -156,8 +156,8 @@ class AttributesExtractor implements Extractor
         string|object $objectOrClass,
         ?string $attribute = null,
         int $flags = 0,
-    ): Collection {
-        return (new Collection())
+    ): Collectionaaa {
+        return (new Collectionaaa())
             ->merge(self::fromClass($objectOrClass, $attribute, $flags))
             ->merge(self::fromClassConstants($objectOrClass, $attribute, $flags))
             ->merge(self::fromProperties($objectOrClass, $attribute, $flags))

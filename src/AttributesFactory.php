@@ -17,15 +17,15 @@ class AttributesFactory
      * @param int $target
      * @param string|null $attribute
      * @param int $flags
-     * @return Attributes
+     * @return Collection
      */
     public function from(
         object|string|array $objectOrClass,
         int $target = Attribute::TARGET_ALL,
         string $attribute = null,
         int $flags = 0,
-    ): Attributes {
-        $collection = new Attributes();
+    ): Collection {
+        $collection = new Collection();
 
         $classes =
             is_array($objectOrClass) ?
@@ -62,9 +62,9 @@ class AttributesFactory
      * @param object|object[] $reflectionObject
      * @param string|null $attribute
      * @param int $flags
-     * @return Attributes
+     * @return Collection
      */
-    public function fromReflection(object|array $reflectionObject, string $attribute = null, int $flags = 0): Attributes
+    public function fromReflection(object|array $reflectionObject, string $attribute = null, int $flags = 0): Collection
     {
         $attributes = [];
         $reflectionObject = is_array($reflectionObject) ? $reflectionObject : [$reflectionObject];
@@ -81,14 +81,14 @@ class AttributesFactory
             }
         }
 
-        return new Attributes(...$attributes);
+        return new Collection(...$attributes);
     }
 
     public function fromClass(
         object|string $objectOrClass,
         string $attribute = null,
         int $flags = 0,
-    ): Attributes {
+    ): Collection {
         $objectOrClass = $this->reflectionClass($objectOrClass);
         return $this->fromReflection($objectOrClass, $attribute, $flags);
     }
@@ -98,8 +98,8 @@ class AttributesFactory
         string $attribute = null,
         int $flags = 0,
         int $filter = null
-    ): Attributes {
-        $collection = new Attributes();
+    ): Collection {
+        $collection = new Collection();
         $objectOrClass = $this->reflectionClass($objectOrClass);
         foreach ($objectOrClass->getProperties($filter) as $property) {
             $collection = $collection->merge($this->fromReflection($property, $attribute, $flags));
@@ -113,8 +113,8 @@ class AttributesFactory
         string $attribute = null,
         int $flags = 0,
         int $filter = null
-    ): Attributes {
-        $collection = new Attributes();
+    ): Collection {
+        $collection = new Collection();
         $objectOrClass = $this->reflectionClass($objectOrClass);
         foreach ($objectOrClass->getMethods($filter) as $method) {
             $collection = $collection->merge($this->fromReflection($method, $attribute, $flags));
@@ -129,8 +129,8 @@ class AttributesFactory
         string $attribute = null,
         int $flags = 0,
         int $filter = null
-    ): Attributes {
-        $collection = new Attributes();
+    ): Collection {
+        $collection = new Collection();
         $objectOrClass = $this->reflectionClass($objectOrClass);
         $methods = is_null($method) ? $objectOrClass->getMethods($filter) : [$objectOrClass->getMethod($method)];
         foreach ($methods as $method) {
@@ -147,8 +147,8 @@ class AttributesFactory
         string $attribute = null,
         int $flags = 0,
         int $filter = null
-    ): Attributes {
-        $collection = new Attributes();
+    ): Collection {
+        $collection = new Collection();
         $objectOrClass = $this->reflectionClass($objectOrClass);
         foreach ($objectOrClass->getReflectionConstants($filter) as $constant) {
             $collection = $collection->merge($this->fromReflection($constant, $attribute, $flags));
