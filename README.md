@@ -9,7 +9,7 @@ Easy way to extract and handle PHP Attributes.
 
 ## Requirements
 
-* PHP >= 8.0
+* PHP >= 8.1
 
 ## Install 
 
