@@ -71,6 +71,8 @@ $extract =
         ReflectionAttribute::IS_INSTANCEOF
     );
 ```
+All these methods will return a collection of [`ParsedAttribute`](src/ParsedAttribute.php).
+
  * `fromClass(string|object|array $objectOrClass): Collection`
  * `fromProperties(string|object|array $objectOrClass, string ...$property)`
  * `fromMethods(string|object|array $objectOrClass, string ...$method)`
@@ -78,8 +80,8 @@ $extract =
  * `fromParameters(string|object|array $objectOrClass, string $method, string ...$parameter)`
  * `fromConstructor(string|object|array $objectOrClass)`
  * `fromConstructorParameters(string|object|array $objectOrClass, string ...$parameter)`
-
-All these methods will return a collection of [`ParsedAttribute`](src/ParsedAttribute.php).
+   
+The Collection class is immutable and fluent:
 
 ```php
 <?php
@@ -104,7 +106,7 @@ foreach ($attributes as $attr) {
 }
 
 ```
-The collection is immutable and fluent:
+
 
 ## Contributing
 
