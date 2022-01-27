@@ -41,14 +41,11 @@ class ReflectionExtractor implements Extractor
 
     private function isValidReflection($reflection): bool
     {
-        return
-            !empty($reflection) && (
-                $reflection instanceof ReflectionClass ||
-                $reflection instanceof ReflectionProperty ||
-                $reflection instanceof ReflectionParameter ||
-                $reflection instanceof ReflectionClassConstant ||
-                $reflection instanceof ReflectionMethod ||
-                $reflection instanceof ReflectionFunction
-            );
+        return $reflection instanceof ReflectionClass
+            || $reflection instanceof ReflectionProperty
+            || $reflection instanceof ReflectionParameter
+            || $reflection instanceof ReflectionClassConstant
+            || $reflection instanceof ReflectionMethod
+            || $reflection instanceof ReflectionFunction;
     }
 }
