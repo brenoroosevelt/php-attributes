@@ -56,10 +56,13 @@ final class Attr
         return new CompositeExtractor(...$extractors);
     }
 
-    public static function fromMethodParams(string|object|array $objectOrClass, string ...$params): Extractor
-    {
+    public static function fromMethodParams(
+        string|object|array $objectOrClass,
+        string $method,
+        string ...$params
+    ): Extractor {
         $extractors = array_map(
-            fn(string|object $objectOrClass) => new MethodParamsExtractor($objectOrClass, ...$params),
+            fn(string|object $objectOrClass) => new MethodParamsExtractor($objectOrClass, $method, ...$params),
             is_array($objectOrClass) ? $objectOrClass : [$objectOrClass]
         );
 
