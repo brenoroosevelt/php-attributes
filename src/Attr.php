@@ -33,10 +33,10 @@ final class Attr
 
     public static function fromProperties(
         string|object|array $objectOrClass,
-        Modifier|string ...$modifiersOrProperties
+        Modifier|string ...$modifiersAndOrProperties
     ): Extractor {
         $extractors = array_map(
-            fn(string|object $objectOrClass) => new PropertyExtractor($objectOrClass, ...$modifiersOrProperties),
+            fn(string|object $objectOrClass) => new PropertyExtractor($objectOrClass, ...$modifiersAndOrProperties),
             is_array($objectOrClass) ? $objectOrClass : [$objectOrClass]
         );
 
@@ -45,10 +45,10 @@ final class Attr
 
     public static function fromMethods(
         string|object|array $objectOrClass,
-        Modifier|string ...$modifiersOrMethods
+        Modifier|string ...$modifiersAndOrMethods
     ): Extractor {
         $extractors = array_map(
-            fn(string|object $objectOrClass) => new MethodExtractor($objectOrClass, ...$modifiersOrMethods),
+            fn(string|object $objectOrClass) => new MethodExtractor($objectOrClass, ...$modifiersAndOrMethods),
             is_array($objectOrClass) ? $objectOrClass : [$objectOrClass]
         );
 
@@ -70,10 +70,10 @@ final class Attr
 
     public static function fromClassConstants(
         string|object|array $objectOrClass,
-        Modifier|string ...$modifiersOrConstants
+        Modifier|string ...$modifiersAndOrConstants
     ): Extractor {
         $extractors = array_map(
-            fn(string|object $objectOrClass) => new ClassConstantExtractor($objectOrClass, ...$modifiersOrConstants),
+            fn(string|object $objectOrClass) => new ClassConstantExtractor($objectOrClass, ...$modifiersAndOrConstants),
             is_array($objectOrClass) ? $objectOrClass : [$objectOrClass]
         );
 

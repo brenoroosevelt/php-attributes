@@ -21,10 +21,10 @@ class MethodExtractor implements Extractor
 
     public function __construct(
         private readonly string|object $classOrObject,
-        Modifier|string ...$modifiersOrMethods
+        Modifier|string ...$modifiersAndOrMethods
     ) {
-        $this->methods = array_filter($modifiersOrMethods, 'is_string');
-        $this->modifiers = Modifier::sum(...array_filter($modifiersOrMethods, fn($m) => $m instanceof Modifier));
+        $this->methods = array_filter($modifiersAndOrMethods, 'is_string');
+        $this->modifiers = Modifier::sum(...array_filter($modifiersAndOrMethods, fn($m) => $m instanceof Modifier));
     }
 
     /**

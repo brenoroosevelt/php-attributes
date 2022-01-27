@@ -20,10 +20,10 @@ class PropertyExtractor implements Extractor
 
     public function __construct(
         private readonly string|object $classOrObject,
-        Modifier|string ...$modifiersOrProperties,
+        Modifier|string ...$modifiersAndOrProperties,
     ) {
-        $this->properties = array_filter($modifiersOrProperties, 'is_string');
-        $this->modifiers = Modifier::sum(...array_filter($modifiersOrProperties, fn($m) => $m instanceof Modifier));
+        $this->properties = array_filter($modifiersAndOrProperties, 'is_string');
+        $this->modifiers = Modifier::sum(...array_filter($modifiersAndOrProperties, fn($m) => $m instanceof Modifier));
     }
 
     /**

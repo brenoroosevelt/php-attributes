@@ -20,10 +20,10 @@ class ClassConstantExtractor implements Extractor
 
     public function __construct(
         private readonly string|object $classOrObject,
-        Modifier|string ...$modifiersOrConstants,
+        Modifier|string ...$modifiersAndOrConstants,
     ) {
-        $this->constants = array_filter($modifiersOrConstants, 'is_string');
-        $this->modifiers = Modifier::sum(...array_filter($modifiersOrConstants, fn($m) => $m instanceof Modifier));
+        $this->constants = array_filter($modifiersAndOrConstants, 'is_string');
+        $this->modifiers = Modifier::sum(...array_filter($modifiersAndOrConstants, fn($m) => $m instanceof Modifier));
     }
 
     /**
