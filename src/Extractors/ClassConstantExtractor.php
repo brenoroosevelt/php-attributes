@@ -38,7 +38,7 @@ class ClassConstantExtractor implements Extractor
                     fn(ReflectionClassConstant $rcc) => $this->filterModifiers($rcc)
                 );
 
-        return (new ReflectionExtractor($reflectionClassConstants))->extract($attribute, $flag);
+        return (new ReflectionExtractor(...$reflectionClassConstants))->extract($attribute, $flag);
     }
 
     private function filterModifiers(ReflectionClassConstant $classConstant): bool

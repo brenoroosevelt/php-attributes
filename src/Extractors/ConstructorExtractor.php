@@ -20,6 +20,6 @@ class ConstructorExtractor implements Extractor
     {
         $reflectionClass = new ReflectionClass($this->classOrObject);
         $reflectionConstructor = array_filter([$reflectionClass->getConstructor()]);
-        return (new ReflectionExtractor($reflectionConstructor))->extract($attribute, $flag);
+        return (new ReflectionExtractor(...$reflectionConstructor))->extract($attribute, $flag);
     }
 }

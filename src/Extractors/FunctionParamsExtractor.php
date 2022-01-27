@@ -33,6 +33,6 @@ class FunctionParamsExtractor implements Extractor
                     fn(ReflectionParameter $rp) => in_array(mb_strtolower($rp->getName()), $this->params)
                 );
 
-        return (new ReflectionExtractor($reflectionParams))->extract($attribute, $flag);
+        return (new ReflectionExtractor(...$reflectionParams))->extract($attribute, $flag);
     }
 }

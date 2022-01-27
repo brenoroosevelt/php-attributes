@@ -38,7 +38,7 @@ class PropertyExtractor implements Extractor
                     fn(ReflectionProperty $rp) => $this->filterModifiers($rp)
                 );
 
-        return (new ReflectionExtractor($reflectionProperties))->extract($attribute, $flag);
+        return (new ReflectionExtractor(...$reflectionProperties))->extract($attribute, $flag);
     }
 
     private function filterModifiers(ReflectionProperty $reflectionProperty): bool

@@ -19,6 +19,6 @@ class FunctionExtractor implements Extractor
      */
     public function extract(string $attribute = null, int $flag = 0): Collection
     {
-        return (new ReflectionExtractor([new ReflectionFunction($this->function)]))->extract($attribute, $flag);
+        return (new ReflectionExtractor(new ReflectionFunction($this->function)))->extract($attribute, $flag);
     }
 }

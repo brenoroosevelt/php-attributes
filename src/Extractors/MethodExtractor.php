@@ -38,7 +38,7 @@ class MethodExtractor implements Extractor
                     fn(ReflectionMethod $rm) => $this->filterModifiers($rm)
                 );
 
-        return (new ReflectionExtractor($reflectionMethods))->extract($attribute, $flag);
+        return (new ReflectionExtractor(...$reflectionMethods))->extract($attribute, $flag);
     }
 
     private function filterModifiers(ReflectionMethod $reflectionMethod): bool

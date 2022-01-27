@@ -18,6 +18,6 @@ class ClassExtractor implements Extractor
      */
     public function extract(string $attribute = null, int $flag = 0): Collection
     {
-        return (new ReflectionExtractor([new ReflectionClass($this->classOrObject)]))->extract($attribute, $flag);
+        return (new ReflectionExtractor(new ReflectionClass($this->classOrObject)))->extract($attribute, $flag);
     }
 }

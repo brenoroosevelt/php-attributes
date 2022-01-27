@@ -16,8 +16,17 @@ use ReflectionProperty;
 
 class ReflectionExtractor implements Extractor
 {
-    public function __construct(private readonly array $reflections)
-    {
+    private readonly array $reflections;
+
+    public function __construct(
+        ReflectionClass |
+        ReflectionProperty |
+        ReflectionParameter |
+        ReflectionMethod |
+        ReflectionClassConstant |
+        ReflectionFunction ...$reflections
+    ) {
+        $this->reflections = $reflections;
     }
 
     /**
@@ -26,26 +35,13 @@ class ReflectionExtractor implements Extractor
     public function extract(string $attribute = null, int $flag = 0): Collection
     {
         $parsedAttributes = [];
-        $reflections = $this->reflections;
-        array_walk_recursive($reflections, function ($reflection) use (&$parsedAttributes, $attribute, $flag) {
-            if ($this->isValidReflection($reflection)) {
-                array_push($parsedAttributes, ...array_map(
-                    fn(ReflectionAttribute $attribute) => new ParsedAttribute($attribute, $reflection),
-                    $reflection->getAttributes($attribute, $flag)
-                ));
-            }
-        });
+        foreach ($this->reflections as $reflection) {
+            array_push($parsedAttributes, ...array_map(
+                fn(ReflectionAttribute $attribute) => new ParsedAttribute($attribute, $reflection),
+                $reflection->getAttributes($attribute, $flag)
+            ));
+        }
 
         return new Collection(...$parsedAttributes);
-    }
-
-    private function isValidReflection($reflection): bool
-    {
-        return $reflection instanceof ReflectionClass
-            || $reflection instanceof ReflectionProperty
-            || $reflection instanceof ReflectionParameter
-            || $reflection instanceof ReflectionClassConstant
-            || $reflection instanceof ReflectionMethod
-            || $reflection instanceof ReflectionFunction;
     }
 }
