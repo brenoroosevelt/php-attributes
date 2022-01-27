@@ -25,9 +25,9 @@ class ReflectionExtractor implements Extractor
      */
     public function extract(string $attribute = null, int $flag = 0): Collection
     {
-        $attributes = [];
+        $parsedAttributes = [];
         $reflections = $this->reflections;
-        array_walk_recursive($reflections, function ($reflection) use (&$attributes, $attribute, $flag) {
+        array_walk_recursive($reflections, function ($reflection) use (&$parsedAttributes, $attribute, $flag) {
             if ($reflection instanceof ReflectionClass ||
                 $reflection instanceof ReflectionProperty ||
                 $reflection instanceof ReflectionParameter ||
@@ -35,13 +35,13 @@ class ReflectionExtractor implements Extractor
                 $reflection instanceof ReflectionMethod ||
                 $reflection instanceof ReflectionFunction
             ) {
-                array_push($attributes, ...array_map(
+                array_push($parsedAttributes, ...array_map(
                     fn(ReflectionAttribute $attribute) => new ParsedAttribute($attribute, $reflection),
                     $reflection->getAttributes($attribute, $flag)
                 ));
             }
         });
 
-        return new Collection(...$attributes);
+        return new Collection(...$parsedAttributes);
     }
 }
