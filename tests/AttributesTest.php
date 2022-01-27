@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace BrenoRoosevelt\PhpAttributes\Tests;
 
-use BrenoRoosevelt\PhpAttributes\Attributes;
+use BrenoRoosevelt\PhpAttributes\Attr;
 use BrenoRoosevelt\PhpAttributes\Tests\Fixture\Stub;
 use ReflectionClass;
 use ReflectionClassConstant;
@@ -16,7 +16,7 @@ class AttributesTest extends TestCase
     /** @test */
     public function shouldExtractFromClass()
     {
-        $attributes = Attributes::extract()->fromClass(Stub::class);
+        $attributes = Attr::fromClass(Stub::class)->extract();
         $this->assertEquals(2, $attributes->count());
         $instances = $attributes->getInstances();
         $this->assertEquals('targetClass1', $instances[0]->id);
@@ -27,7 +27,7 @@ class AttributesTest extends TestCase
     /** @test */
     public function shouldExtractFromConstants()
     {
-        $attributes = Attributes::extract()->fromClassConstants(Stub::class);
+        $attributes = Attr::fromClassConstants(Stub::class)->extract();
         $this->assertEquals(2, $attributes->count());
         $instances = $attributes->getInstances();
         $this->assertEquals('targetConstant1', $instances[0]->id);
@@ -38,7 +38,7 @@ class AttributesTest extends TestCase
     /** @test */
     public function shouldExtractFromProperty()
     {
-        $attributes = Attributes::extract()->fromProperties(Stub::class);
+        $attributes = Attr::fromProperties(Stub::class)->extract();
         $this->assertEquals(2, $attributes->count());
         $instances = $attributes->getInstances();
         $this->assertEquals('targetProperty1', $instances[0]->id);
@@ -49,7 +49,7 @@ class AttributesTest extends TestCase
     /** @test */
     public function shouldExtractFromMethods()
     {
-        $attributes = Attributes::extract()->fromMethods(Stub::class, 'foo');
+        $attributes = Attr::fromMethods(Stub::class, 'foo')->extract();
         $this->assertEquals(2, $attributes->count());
         $instances = $attributes->getInstances();
         $this->assertEquals('targetMethod1', $instances[0]->id);
@@ -60,7 +60,7 @@ class AttributesTest extends TestCase
     /** @test */
     public function shouldExtractFromConstructor()
     {
-        $attributes = Attributes::extract()->fromConstructor(Stub::class);
+        $attributes = Attr::fromConstructor(Stub::class)->extract();
         $this->assertEquals(2, $attributes->count());
         $instances = $attributes->getInstances();
         $this->assertEquals('targetConstructor1', $instances[0]->id);
@@ -69,9 +69,9 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
-    public function shouldExtractFromConstructorParameters()
+    public function shouldExtractFromConstructorParams()
     {
-        $attributes = Attributes::extract()->fromConstructorParameters(Stub::class);
+        $attributes = Attr::fromConstructorParams(Stub::class)->extract();
         $this->assertEquals(2, $attributes->count());
         $instances = $attributes->getInstances();
         $this->assertEquals('targetConstructorParamX', $instances[0]->id);
@@ -80,9 +80,9 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
-    public function shouldExtractFromParameters()
+    public function shouldExtractFromMethodsParams()
     {
-        $attributes = Attributes::extract()->fromParameters(Stub::class, 'foo');
+        $attributes = Attr::fromMethodParams(Stub::class, 'foo')->extract();
         $this->assertEquals(2, $attributes->count());
         $instances = $attributes->getInstances();
         $this->assertEquals('targetParameter1', $instances[0]->id);

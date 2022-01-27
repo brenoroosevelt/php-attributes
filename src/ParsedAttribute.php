@@ -10,12 +10,16 @@ use ReflectionMethod;
 use ReflectionParameter;
 use ReflectionProperty;
 
-// @codingStandardsIgnoreFile
 final class ParsedAttribute
 {
     public function __construct(
         public readonly ReflectionAttribute $attribute,
-        public readonly ReflectionClass|ReflectionClassConstant|ReflectionProperty|ReflectionMethod|ReflectionParameter $target
+        public readonly
+        ReflectionClass|
+        ReflectionClassConstant|
+        ReflectionProperty|
+        ReflectionMethod|
+        ReflectionParameter $target
     ) {
     }
 }
