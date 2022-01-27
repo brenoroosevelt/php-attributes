@@ -20,6 +20,5 @@ enum Modifier: int
             empty($modifiers) ?
                 null :
                 array_reduce($modifiers, fn($sum, Modifier $item) => $sum + $item->value, 0);
-
     }
 }
