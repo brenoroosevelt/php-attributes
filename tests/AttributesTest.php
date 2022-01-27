@@ -55,7 +55,7 @@ class AttributesTest extends TestCase
     /** @test */
     public function shouldExtractFromConstantsFiltering(): void
     {
-        $attributes = Attr::fromClassConstants(Stub::class, [Modifier::IsPrivate])->extract();
+        $attributes = Attr::fromClassConstants(Stub::class, Modifier::IsPrivate)->extract();
         $this->assertEquals(2, $attributes->count());
         $instances = $attributes->getInstances();
         $this->assertEquals('targetConstantC1', $instances[0]->id);
@@ -66,7 +66,7 @@ class AttributesTest extends TestCase
     /** @test */
     public function shouldExtractFromConstantsByName(): void
     {
-        $attributes = Attr::fromClassConstants(Stub::class, [], 'D')->extract();
+        $attributes = Attr::fromClassConstants(Stub::class, 'D')->extract();
         $this->assertEquals(2, $attributes->count());
         $instances = $attributes->getInstances();
         $this->assertEquals('targetConstantD1', $instances[0]->id);
@@ -80,7 +80,7 @@ class AttributesTest extends TestCase
         $attributes =
             Attr::fromClassConstants(
                 Stub::class,
-                [Modifier::IsPrivate],
+                Modifier::IsPrivate,
                 'D'
             )->extract();
 
@@ -91,14 +91,14 @@ class AttributesTest extends TestCase
     public function shouldExtractFromConstantsByNameException(): void
     {
         $this->expectException(ClassConstantDoesNotExists::class);
-        Attr::fromClassConstants(Stub::class, [], 'INVALID')->extract();
+        Attr::fromClassConstants(Stub::class, 'INVALID')->extract();
     }
 
     /** @test */
     public function shouldGetClassConstantDoesNotExistsException(): void
     {
         $this->expectException(ClassConstantDoesNotExists::class);
-        Attr::fromClassConstants(Stub::class, [], 'INVALID')->extract();
+        Attr::fromClassConstants(Stub::class, 'INVALID')->extract();
     }
 
     /** @test */
@@ -124,7 +124,7 @@ class AttributesTest extends TestCase
     /** @test */
     public function shouldExtractFromPropertyFiltering(): void
     {
-        $attributes = Attr::fromProperties(Stub::class, [Modifier::IsPrivate])->extract();
+        $attributes = Attr::fromProperties(Stub::class, Modifier::IsPrivate)->extract();
         $this->assertEquals(2, $attributes->count());
         $instances = $attributes->getInstances();
         $this->assertEquals('targetPropertyX1', $instances[0]->id);
@@ -137,7 +137,7 @@ class AttributesTest extends TestCase
     {
         $attributes = Attr::fromProperties(
             Stub::class,
-            [Modifier::IsProtected],
+            Modifier::IsProtected,
             'y'
         )->extract();
         $this->assertEquals(2, $attributes->count());
@@ -150,7 +150,7 @@ class AttributesTest extends TestCase
     /** @test */
     public function shouldExtractFromPropertyByNameAndFiltering(): void
     {
-        $attributes = Attr::fromProperties(Stub::class, [], 'y')->extract();
+        $attributes = Attr::fromProperties(Stub::class, 'y')->extract();
         $this->assertEquals(2, $attributes->count());
         $instances = $attributes->getInstances();
         $this->assertEquals('targetPropertyY1', $instances[0]->id);
@@ -162,7 +162,7 @@ class AttributesTest extends TestCase
     public function shouldGetPropertyDoesNotExistsWhenExtractProperties(): void
     {
         $this->expectException(PropertyDoesNotExists::class);
-        Attr::fromProperties(Stub::class, [], 'invalid')->extract();
+        Attr::fromProperties(Stub::class, 'invalid')->extract();
     }
 
     /** @test */
@@ -194,7 +194,7 @@ class AttributesTest extends TestCase
     public function shouldGetMethodDoesNotExistsExceptionWhenExtractMethods(): void
     {
         $this->expectException(MethodDoesNotExists::class);
-        Attr::fromMethods(Stub::class, [], 'invalid')->extract();
+        Attr::fromMethods(Stub::class, 'invalid')->extract();
     }
 
     /** @test */
@@ -207,7 +207,7 @@ class AttributesTest extends TestCase
     /** @test */
     public function shouldExtractFromMethodsByName(): void
     {
-        $attributes = Attr::fromMethods(Stub::class, [], 'foo', 'bar')->extract();
+        $attributes = Attr::fromMethods(Stub::class, 'foo', 'bar')->extract();
         $this->assertEquals(4, $attributes->count());
         $instances = $attributes->getInstances();
         $this->assertEquals('targetMethodFoo1', $instances[0]->id);
@@ -220,7 +220,11 @@ class AttributesTest extends TestCase
     /** @test */
     public function shouldExtractFromMethodsFiltering(): void
     {
-        $attributes = Attr::fromMethods(Stub::class, [Modifier::IsProtected, Modifier::IsPrivate])->extract();
+        $attributes = Attr::fromMethods(
+            Stub::class,
+            Modifier::IsProtected,
+            Modifier::IsPrivate
+        )->extract();
         $this->assertEquals(4, $attributes->count());
         $instances = $attributes->getInstances();
         $this->assertEquals('targetMethodFoo1', $instances[0]->id);
@@ -235,7 +239,8 @@ class AttributesTest extends TestCase
     {
         $attributes = Attr::fromMethods(
             Stub::class,
-            [Modifier::IsProtected, Modifier::IsPrivate],
+            Modifier::IsProtected,
+            Modifier::IsPrivate,
             'foo',
             'bar'
         )->extract();

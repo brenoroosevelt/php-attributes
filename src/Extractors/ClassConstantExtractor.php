@@ -16,15 +16,14 @@ class ClassConstantExtractor implements Extractor
 
     /** @var string[] */
     private readonly array $constants;
-    private readonly ?int $filter;
+    private readonly ?int $modifiers;
 
     public function __construct(
         private readonly string|object $classOrObject,
-        array $modifiers = [],
-        string ...$constants,
+        Modifier|string ...$modifiersOrConstants,
     ) {
-        $this->constants = $constants;
-        $this->filter = Modifier::sum(...array_filter($modifiers, fn($m) => $m instanceof Modifier));
+        $this->constants = array_filter($modifiersOrConstants, 'is_string');
+        $this->modifiers = Modifier::sum(...array_filter($modifiersOrConstants, fn($m) => $m instanceof Modifier));
     }
 
     /**
@@ -37,7 +36,7 @@ class ClassConstantExtractor implements Extractor
         $reflectionClass = $this->getClassOrFail($this->classOrObject);
         $reflectionClassConstants =
             empty($this->constants) ?
-                $reflectionClass->getReflectionConstants($this->filter) :
+                $reflectionClass->getReflectionConstants($this->modifiers) :
                 array_filter(
                     array_map(
                         fn(string $constant) => $this->getConstantOrFail($reflectionClass, $constant),
@@ -51,6 +50,6 @@ class ClassConstantExtractor implements Extractor
 
     private function filterModifiers(ReflectionClassConstant $classConstant): bool
     {
-        return ($this->filter === null) || ($this->filter & $classConstant->getModifiers());
+        return ($this->modifiers === null) || ($this->modifiers & $classConstant->getModifiers());
     }
 }

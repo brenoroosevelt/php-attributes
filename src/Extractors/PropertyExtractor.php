@@ -16,15 +16,14 @@ class PropertyExtractor implements Extractor
 
     /** @var string[] */
     private readonly array $properties;
-    private readonly ?int $filter;
+    private readonly ?int $modifiers;
 
     public function __construct(
         private readonly string|object $classOrObject,
-        array $modifiers = [],
-        string ...$properties
+        Modifier|string ...$modifiersOrProperties,
     ) {
-        $this->properties = $properties;
-        $this->filter = Modifier::sum(...array_filter($modifiers, fn($m) => $m instanceof Modifier));
+        $this->properties = array_filter($modifiersOrProperties, 'is_string');
+        $this->modifiers = Modifier::sum(...array_filter($modifiersOrProperties, fn($m) => $m instanceof Modifier));
     }
 
     /**
@@ -37,7 +36,7 @@ class PropertyExtractor implements Extractor
         $reflectionClass = $this->getClassOrFail($this->classOrObject);
         $reflectionProperties =
             empty($this->properties) ?
-                $reflectionClass->getProperties($this->filter) :
+                $reflectionClass->getProperties($this->modifiers) :
                 array_filter(
                     array_map(
                         fn(string $property) => $this->getPropertyOrFail($reflectionClass, $property),
@@ -51,6 +50,6 @@ class PropertyExtractor implements Extractor
 
     private function filterModifiers(ReflectionProperty $reflectionProperty): bool
     {
-        return ($this->filter === null) || ($this->filter & $reflectionProperty->getModifiers());
+        return ($this->modifiers === null) || ($this->modifiers & $reflectionProperty->getModifiers());
     }
 }

@@ -17,15 +17,14 @@ class MethodExtractor implements Extractor
 
     /** @var string[] */
     private readonly array $methods;
-    private readonly ?int $filter;
+    private readonly ?int $modifiers;
 
     public function __construct(
         private readonly string|object $classOrObject,
-        array $modifiers = [],
-        string ...$methods
+        Modifier|string ...$modifiersOrMethods
     ) {
-        $this->methods = $methods;
-        $this->filter = Modifier::sum(...array_filter($modifiers, fn($m) => $m instanceof Modifier));
+        $this->methods = array_filter($modifiersOrMethods, 'is_string');
+        $this->modifiers = Modifier::sum(...array_filter($modifiersOrMethods, fn($m) => $m instanceof Modifier));
     }
 
     /**
@@ -38,7 +37,7 @@ class MethodExtractor implements Extractor
         $reflectionClass = $this->getClassOrFail($this->classOrObject);
         $reflectionMethods =
             empty($this->methods) ?
-                $reflectionClass->getMethods($this->filter) :
+                $reflectionClass->getMethods($this->modifiers) :
                 array_filter(
                     array_map(
                         fn(string $method) => $this->getMethodOrFail($reflectionClass, $method),
@@ -52,6 +51,6 @@ class MethodExtractor implements Extractor
 
     private function filterModifiers(ReflectionMethod $reflectionMethod): bool
     {
-        return ($this->filter === null) || ($this->filter & $reflectionMethod->getModifiers());
+        return ($this->modifiers === null) || ($this->modifiers & $reflectionMethod->getModifiers());
     }
 }
