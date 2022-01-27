@@ -12,7 +12,9 @@ interface Extractor
      *
      * @param string|null $attribute the fully qualified class name for attribute
      * @param int $flag filter for attribute, ex: \ReflectionAttribute::IS_INSTANCEOF
+     *
      * @return ParsedAttribtubeCollection a collection of `ParsedAttrbiutes`
+     *
      * @throws AttributeExtractionException Error while extracting attribute
      * Usually when classes, methods, function or properties don't exist
      */

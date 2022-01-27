@@ -332,6 +332,20 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
+    public function shouldExtractFromFunctionParamsByName()
+    {
+        $fn = function (#[Attr1('targetFnParam')] $p, #[Attr1('targetFnParam2')] $p2) {
+        };
+
+        $attributes = Attr::fromFunctionParams($fn, 'p2')->extract();
+
+        $this->assertEquals(1, $attributes->count());
+        $instances = $attributes->getInstances();
+        $this->assertEquals('targetFnParam2', $instances[0]->id);
+        $this->assertContainsOnlyInstancesOf(ReflectionParameter::class, $attributes->getTargets());
+    }
+
+    /** @test */
     public function shouldGetFunctionDoesNotExistsExceptionWhenExtractFunction()
     {
         $this->expectException(FunctionDoesNotExists::class);
