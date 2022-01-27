@@ -20,11 +20,6 @@ class ReflectionExtractor implements Extractor
     {
     }
 
-    public static function fromReflections(array $reflections, string $attribute = null, int $flag = 0): Collection
-    {
-        return (new ReflectionExtractor($reflections))->extract($attribute, $flag);
-    }
-
     /**
      * @inheritDoc
      */

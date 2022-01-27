@@ -15,6 +15,9 @@ use BrenoRoosevelt\PhpAttributes\Extractors\MethodParamsExtractor;
 use BrenoRoosevelt\PhpAttributes\Extractors\PropertyExtractor;
 use Closure;
 
+/**
+ * Helper class for attribute extraction
+ */
 final class Attr
 {
     public static function fromClass(string|object|array $objectOrClass): Extractor
