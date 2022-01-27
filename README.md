@@ -58,7 +58,7 @@ Explaining parameters in detail:
 
 ```php
 <?php
-use BrenoRoosevelt\PhpAttributes\Collection;
+use BrenoRoosevelt\PhpAttributes\ParsedAttribtubeCollection;
 
 $extract = 
      Attributes::extract(

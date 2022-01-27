@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace BrenoRoosevelt\PhpAttributes\Extractors;
 
-use BrenoRoosevelt\PhpAttributes\Collection;
+use BrenoRoosevelt\PhpAttributes\ParsedAttribtubeCollection;
 use BrenoRoosevelt\PhpAttributes\Extractor;
 use BrenoRoosevelt\PhpAttributes\ParsedAttribute;
 use ReflectionAttribute;
@@ -32,7 +32,7 @@ class ReflectionExtractor implements Extractor
     /**
      * @inheritDoc
      */
-    public function extract(string $attribute = null, int $flag = 0): Collection
+    public function extract(string $attribute = null, int $flag = 0): ParsedAttribtubeCollection
     {
         $parsedAttributes = [];
         foreach ($this->reflections as $reflection) {
@@ -42,6 +42,6 @@ class ReflectionExtractor implements Extractor
             ));
         }
 
-        return new Collection(...$parsedAttributes);
+        return new ParsedAttribtubeCollection(...$parsedAttributes);
     }
 }

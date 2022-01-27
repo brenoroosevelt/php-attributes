@@ -3,13 +3,15 @@ declare(strict_types=1);
 
 namespace BrenoRoosevelt\PhpAttributes\Extractors;
 
-use BrenoRoosevelt\PhpAttributes\Collection;
+use BrenoRoosevelt\PhpAttributes\ParsedAttribtubeCollection;
+use BrenoRoosevelt\PhpAttributes\Exception\ClassDoesNotExists;
 use BrenoRoosevelt\PhpAttributes\Extractor;
-use ReflectionClass;
 use ReflectionParameter;
 
 class ConstructorParamsExtractor implements Extractor
 {
+    use ReflectionTrait;
+
     /** @var string[] */
     private readonly array $params;
 
@@ -21,10 +23,11 @@ class ConstructorParamsExtractor implements Extractor
 
     /**
      * @inheritDoc
+     * @throws ClassDoesNotExists if the class does not exist
      */
-    public function extract(string $attribute = null, int $flag = 0): Collection
+    public function extract(string $attribute = null, int $flag = 0): ParsedAttribtubeCollection
     {
-        $reflectionClass = new ReflectionClass($this->classOrObject);
+        $reflectionClass = $this->getClassOrFail($this->classOrObject);
         $reflectionConstructorParams =
             empty($this->params) ?
                 $reflectionClass->getConstructor()?->getParameters() ?? [] :

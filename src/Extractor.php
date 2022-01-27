@@ -3,14 +3,18 @@ declare(strict_types=1);
 
 namespace BrenoRoosevelt\PhpAttributes;
 
+use BrenoRoosevelt\PhpAttributes\Exception\AttributeExtractionException;
+
 interface Extractor
 {
     /**
-     * Returns a collection of `ParsedAttribute`
+     * Extracts attributes and returns them inside `ParseAttribute` collection
      *
-     * @param string|null $attribute
-     * @param int $flag
-     * @return Collection
+     * @param string|null $attribute the fully qualified class name for attribute
+     * @param int $flag filter for attribute, ex: \ReflectionAttribute::IS_INSTANCEOF
+     * @return ParsedAttribtubeCollection a collection of `ParsedAttrbiutes`
+     * @throws AttributeExtractionException Error while extracting attribute
+     * Usually when classes, methods, function or properties don't exist
      */
-    public function extract(string $attribute = null, int $flag = 0): Collection;
+    public function extract(string $attribute = null, int $flag = 0): ParsedAttribtubeCollection;
 }

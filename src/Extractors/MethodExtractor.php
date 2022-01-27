@@ -3,13 +3,17 @@ declare(strict_types=1);
 
 namespace BrenoRoosevelt\PhpAttributes\Extractors;
 
-use BrenoRoosevelt\PhpAttributes\Collection;
+use BrenoRoosevelt\PhpAttributes\ParsedAttribtubeCollection;
+
+use BrenoRoosevelt\PhpAttributes\Exception\ClassDoesNotExists;
+use BrenoRoosevelt\PhpAttributes\Exception\MethodDoesNotExists;
 use BrenoRoosevelt\PhpAttributes\Extractor;
-use ReflectionClass;
 use ReflectionMethod;
 
 class MethodExtractor implements Extractor
 {
+    use ReflectionTrait;
+
     /** @var string[] */
     private readonly array $methods;
 
@@ -23,16 +27,18 @@ class MethodExtractor implements Extractor
 
     /**
      * @inheritDoc
+     * @throws ClassDoesNotExists if the class does not exist
+     * @throws MethodDoesNotExists if the method does not exist
      */
-    public function extract(string $attribute = null, int $flag = 0): Collection
+    public function extract(string $attribute = null, int $flag = 0): ParsedAttribtubeCollection
     {
-        $reflectionClass = new ReflectionClass($this->classOrObject);
+        $reflectionClass = $this->getClassOrFail($this->classOrObject);
         $reflectionMethods =
             empty($this->methods) ?
                 $reflectionClass->getMethods($this->filter) :
                 array_filter(
                     array_map(
-                        fn(string $method) => $reflectionClass->getMethod($method),
+                        fn(string $method) => $this->getMethodOrFail($reflectionClass, $method),
                         $this->methods
                     ),
                     fn(ReflectionMethod $rm) => $this->filterModifiers($rm)

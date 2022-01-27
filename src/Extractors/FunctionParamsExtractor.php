@@ -3,14 +3,16 @@ declare(strict_types=1);
 
 namespace BrenoRoosevelt\PhpAttributes\Extractors;
 
-use BrenoRoosevelt\PhpAttributes\Collection;
+use BrenoRoosevelt\PhpAttributes\ParsedAttribtubeCollection;
+use BrenoRoosevelt\PhpAttributes\Exception\FunctionDoesNotExists;
 use BrenoRoosevelt\PhpAttributes\Extractor;
 use Closure;
-use ReflectionFunction;
 use ReflectionParameter;
 
 class FunctionParamsExtractor implements Extractor
 {
+    use ReflectionTrait;
+
     private readonly array $params;
 
     public function __construct(private readonly string|Closure $function, string ...$params)
@@ -21,10 +23,11 @@ class FunctionParamsExtractor implements Extractor
 
     /**
      * @inheritDoc
+     * @throws FunctionDoesNotExists if the function does not exist
      */
-    public function extract(string $attribute = null, int $flag = 0): Collection
+    public function extract(string $attribute = null, int $flag = 0): ParsedAttribtubeCollection
     {
-        $reflectionFunction = new ReflectionFunction($this->function);
+        $reflectionFunction = $this->getFunctionOrFail($this->function);
         $reflectionParams =
             empty($this->params) ?
                 $reflectionFunction->getParameters() :

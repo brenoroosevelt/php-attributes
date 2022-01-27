@@ -10,7 +10,7 @@ use ReflectionAttribute;
 use function array_map;
 use function count;
 
-class Collection implements IteratorAggregate, Countable
+class ParsedAttribtubeCollection implements IteratorAggregate, Countable
 {
     /** @var ParsedAttribute[] */
     private readonly array $data;
@@ -25,7 +25,7 @@ class Collection implements IteratorAggregate, Countable
         return new self(...$this->data, ...$attributes);
     }
 
-    public function merge(Collection $collection) :self
+    public function merge(ParsedAttribtubeCollection $collection) :self
     {
         return new self(...$this->data, ...$collection->data);
     }
