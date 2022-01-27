@@ -47,7 +47,7 @@ final class Stub
 
     #[Attr2('targetMethodBar1')]
     #[Attr1('targetMethodBar2')]
-    public function bar(
+    private function bar(
         #[Attr1('targetParameterBar1')]
         #[Attr2('targetParameterBar2')]
         string $k

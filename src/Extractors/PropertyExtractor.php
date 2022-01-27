@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace BrenoRoosevelt\PhpAttributes\Extractors;
 
+use BrenoRoosevelt\PhpAttributes\Modifiers\Modifier;
 use BrenoRoosevelt\PhpAttributes\ParsedAttribtubeCollection;
 use BrenoRoosevelt\PhpAttributes\Exception\ClassDoesNotExists;
 use BrenoRoosevelt\PhpAttributes\Exception\PropertyDoesNotExists;
@@ -15,13 +16,15 @@ class PropertyExtractor implements Extractor
 
     /** @var string[] */
     private readonly array $properties;
+    private readonly ?int $filter;
 
     public function __construct(
         private readonly string|object $classOrObject,
-        private readonly ?int $filter = null,
+        array $modifiers = [],
         string ...$properties
     ) {
         $this->properties = $properties;
+        $this->filter = $this->sumModifiers(...array_filter($modifiers, fn($m) => $m instanceof Modifier));
     }
 
     /**

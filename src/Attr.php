@@ -13,6 +13,7 @@ use BrenoRoosevelt\PhpAttributes\Extractors\FunctionParamsExtractor;
 use BrenoRoosevelt\PhpAttributes\Extractors\MethodExtractor;
 use BrenoRoosevelt\PhpAttributes\Extractors\MethodParamsExtractor;
 use BrenoRoosevelt\PhpAttributes\Extractors\PropertyExtractor;
+use BrenoRoosevelt\PhpAttributes\Modifiers\Modifier;
 use Closure;
 
 /**
@@ -20,6 +21,10 @@ use Closure;
  */
 final class Attr
 {
+    /**
+     * @param string|object|array $objectOrClass
+     * @return Extractor
+     */
     public static function fromClass(string|object|array $objectOrClass): Extractor
     {
         $extractors = array_map(
@@ -30,9 +35,15 @@ final class Attr
         return new CompositeExtractor(...$extractors);
     }
 
+    /**
+     * @param string|object|array $objectOrClass
+     * @param Modifier[] $filter
+     * @param string ...$properties
+     * @return Extractor
+     */
     public static function fromProperties(
         string|object|array $objectOrClass,
-        ?int $filter = null,
+        array $filter = [],
         string ...$properties
     ): Extractor {
         $extractors = array_map(
@@ -43,9 +54,15 @@ final class Attr
         return new CompositeExtractor(...$extractors);
     }
 
+    /**
+     * @param string|object|array $objectOrClass
+     * @param Modifier[] $filter
+     * @param string ...$methods
+     * @return Extractor
+     */
     public static function fromMethods(
         string|object|array $objectOrClass,
-        ?int $filter = null,
+        array $filter = [],
         string ...$methods
     ): Extractor {
         $extractors = array_map(
@@ -56,6 +73,12 @@ final class Attr
         return new CompositeExtractor(...$extractors);
     }
 
+    /**
+     * @param string|object|array $objectOrClass
+     * @param string $method
+     * @param string ...$params
+     * @return Extractor
+     */
     public static function fromMethodParams(
         string|object|array $objectOrClass,
         string $method,
@@ -69,9 +92,15 @@ final class Attr
         return new CompositeExtractor(...$extractors);
     }
 
+    /**
+     * @param string|object|array $objectOrClass
+     * @param Modifier[] $filter
+     * @param string ...$constants
+     * @return Extractor
+     */
     public static function fromClassConstants(
         string|object|array $objectOrClass,
-        ?int $filter = null,
+        array $filter = [],
         string ...$constants
     ): Extractor {
         $extractors = array_map(
@@ -82,6 +111,10 @@ final class Attr
         return new CompositeExtractor(...$extractors);
     }
 
+    /**
+     * @param string|object|array $objectOrClass
+     * @return Extractor
+     */
     public static function fromConstructor(string|object|array $objectOrClass): Extractor
     {
         $extractors = array_map(
@@ -92,6 +125,11 @@ final class Attr
         return new CompositeExtractor(...$extractors);
     }
 
+    /**
+     * @param string|object|array $objectOrClass
+     * @param string ...$params
+     * @return Extractor
+     */
     public static function fromConstructorParams(string|object|array $objectOrClass, string ...$params): Extractor
     {
         $extractors = array_map(
@@ -102,6 +140,10 @@ final class Attr
         return new CompositeExtractor(...$extractors);
     }
 
+    /**
+     * @param string|Closure|array $fn
+     * @return Extractor
+     */
     public static function fromFunctions(string|Closure|array $fn): Extractor
     {
         $extractors = array_map(
@@ -112,6 +154,11 @@ final class Attr
         return new CompositeExtractor(...$extractors);
     }
 
+    /**
+     * @param string|Closure|array $fn
+     * @param string ...$params
+     * @return Extractor
+     */
     public static function fromFunctionParams(string|Closure|array $fn, string ...$params): Extractor
     {
         $extractors = array_map(
