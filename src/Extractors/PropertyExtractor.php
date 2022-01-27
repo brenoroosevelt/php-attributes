@@ -6,14 +6,18 @@ namespace BrenoRoosevelt\PhpAttributes\Extractors;
 use BrenoRoosevelt\PhpAttributes\Collection;
 use BrenoRoosevelt\PhpAttributes\Extractor;
 use ReflectionClass;
+use ReflectionProperty;
 
 class PropertyExtractor implements Extractor
 {
     /** @var string[] */
     private readonly array $properties;
 
-    public function __construct(private readonly string|object $classOrObject, string ...$properties)
-    {
+    public function __construct(
+        private readonly string|object $classOrObject,
+        private readonly ?int $filter = null,
+        string ...$properties
+    ) {
         $this->properties = $properties;
     }
 
@@ -25,9 +29,16 @@ class PropertyExtractor implements Extractor
         $reflectionClass = new ReflectionClass($this->classOrObject);
         $reflectionProperties =
             empty($this->properties) ?
-                $reflectionClass->getProperties() :
+                $reflectionClass->getProperties($this->filter) :
                 array_map(fn(string $property) => $reflectionClass->getProperty($property), $this->properties);
 
+        $reflectionProperties = array_filter($reflectionProperties, fn($rp) => $this->filterModifiers($rp));
+
         return (new ReflectionExtractor($reflectionProperties))->extract($attribute, $flag);
+    }
+
+    private function filterModifiers(ReflectionProperty $reflectionProperty): bool
+    {
+        return ($this->filter === null) || ($this->filter & $reflectionProperty->getModifiers());
     }
 }

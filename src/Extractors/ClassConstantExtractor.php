@@ -6,14 +6,18 @@ namespace BrenoRoosevelt\PhpAttributes\Extractors;
 use BrenoRoosevelt\PhpAttributes\Collection;
 use BrenoRoosevelt\PhpAttributes\Extractor;
 use ReflectionClass;
+use ReflectionClassConstant;
 
 class ClassConstantExtractor implements Extractor
 {
     /** @var string[] */
     private readonly array $constants;
 
-    public function __construct(private readonly string|object $classOrObject, string ...$constants)
-    {
+    public function __construct(
+        private readonly string|object $classOrObject,
+        private readonly ?int $filter = null,
+        string ...$constants,
+    ) {
         $this->constants = $constants;
     }
 
@@ -25,9 +29,16 @@ class ClassConstantExtractor implements Extractor
         $reflectionClass = new ReflectionClass($this->classOrObject);
         $reflectionClassConstants =
             empty($this->constants) ?
-                $reflectionClass->getReflectionConstants() :
+                $reflectionClass->getReflectionConstants($this->filter) :
                 array_map(fn(string $constant) => $reflectionClass->getReflectionConstant($constant), $this->constants);
 
+        $reflectionClassConstants = array_filter($reflectionClassConstants, fn($rf) => $this->filterModifiers($rf));
+
         return (new ReflectionExtractor($reflectionClassConstants))->extract($attribute, $flag);
+    }
+
+    private function filterModifiers(ReflectionClassConstant $classConstant): bool
+    {
+        return ($this->filter === null) || ($this->filter & $classConstant->getModifiers());
     }
 }

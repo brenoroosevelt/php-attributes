@@ -49,7 +49,7 @@ class AttributesTest extends TestCase
     /** @test */
     public function shouldExtractFromMethods()
     {
-        $attributes = Attr::fromMethods(Stub::class, 'foo')->extract();
+        $attributes = Attr::fromMethods(Stub::class, null, 'foo')->extract();
         $this->assertEquals(2, $attributes->count());
         $instances = $attributes->getInstances();
         $this->assertEquals('targetMethod1', $instances[0]->id);

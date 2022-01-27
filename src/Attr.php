@@ -30,20 +30,26 @@ final class Attr
         return new CompositeExtractor(...$extractors);
     }
 
-    public static function fromProperties(string|object|array $objectOrClass, string ...$properties): Extractor
-    {
+    public static function fromProperties(
+        string|object|array $objectOrClass,
+        ?int $filter = null,
+        string ...$properties
+    ): Extractor {
         $extractors = array_map(
-            fn(string|object $objectOrClass) => new PropertyExtractor($objectOrClass, ...$properties),
+            fn(string|object $objectOrClass) => new PropertyExtractor($objectOrClass, $filter, ...$properties),
             is_array($objectOrClass) ? $objectOrClass : [$objectOrClass]
         );
 
         return new CompositeExtractor(...$extractors);
     }
 
-    public static function fromMethods(string|object|array $objectOrClass, string ...$methods): Extractor
-    {
+    public static function fromMethods(
+        string|object|array $objectOrClass,
+        ?int $filter = null,
+        string ...$methods
+    ): Extractor {
         $extractors = array_map(
-            fn(string|object $objectOrClass) => new MethodExtractor($objectOrClass, ...$methods),
+            fn(string|object $objectOrClass) => new MethodExtractor($objectOrClass, $filter, ...$methods),
             is_array($objectOrClass) ? $objectOrClass : [$objectOrClass]
         );
 
@@ -60,10 +66,13 @@ final class Attr
         return new CompositeExtractor(...$extractors);
     }
 
-    public static function fromClassConstants(string|object|array $objectOrClass, string ...$constants): Extractor
-    {
+    public static function fromClassConstants(
+        string|object|array $objectOrClass,
+        ?int $filter = null,
+        string ...$constants
+    ): Extractor {
         $extractors = array_map(
-            fn(string|object $objectOrClass) => new ClassConstantExtractor($objectOrClass, ...$constants),
+            fn(string|object $objectOrClass) => new ClassConstantExtractor($objectOrClass, $filter, ...$constants),
             is_array($objectOrClass) ? $objectOrClass : [$objectOrClass]
         );
 
