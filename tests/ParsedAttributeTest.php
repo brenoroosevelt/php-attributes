@@ -11,7 +11,7 @@ use ReflectionClass;
 class ParsedAttributeTest extends TestCase
 {
     /** @test */
-    public function shouldConstructAndGetCorrectValues()
+    public function shouldConstructAndGetCorrectValues(): void
     {
         $target = new ReflectionClass(Stub::class);
         $attribute = $target->getAttributes()[0];

@@ -14,7 +14,7 @@ use ReflectionProperty;
 class CollectionTest extends TestCase
 {
     /** @test */
-    public function shouldMergeCollection()
+    public function shouldMergeCollection(): void
     {
         $collection1 = new ParsedAttribtubeCollection(Fixtures::attr1());
         $collection2 = new ParsedAttribtubeCollection(Fixtures::attr2());
@@ -23,7 +23,7 @@ class CollectionTest extends TestCase
     }
 
     /** @test */
-    public function shouldAddNewValue()
+    public function shouldAddNewValue(): void
     {
         $collection = new ParsedAttribtubeCollection(Fixtures::attr1());
         $this->assertEquals(1, $collection->count());
@@ -32,7 +32,7 @@ class CollectionTest extends TestCase
     }
 
     /** @test */
-    public function shouldGetFirstElement()
+    public function shouldGetFirstElement(): void
     {
         $collection = new ParsedAttribtubeCollection(Fixtures::attr2(), Fixtures::attr1());
         $first = $collection->first();
@@ -40,7 +40,7 @@ class CollectionTest extends TestCase
     }
 
     /** @test */
-    public function shouldCheckIsEmpty()
+    public function shouldCheckIsEmpty(): void
     {
         $collection = new ParsedAttribtubeCollection(Fixtures::attr1());
         $this->assertFalse($collection->isEmpty());
@@ -50,7 +50,7 @@ class CollectionTest extends TestCase
     }
 
     /** @test */
-    public function shouldGetInstances()
+    public function shouldGetInstances(): void
     {
         $collection = new ParsedAttribtubeCollection(Fixtures::attr1(), Fixtures::attr2());
         $instances = $collection->getInstances();
@@ -60,7 +60,7 @@ class CollectionTest extends TestCase
     }
 
     /** @test */
-    public function shouldGetReflectionAttributes()
+    public function shouldGetReflectionAttributes(): void
     {
         $collection = new ParsedAttribtubeCollection(Fixtures::attr1(), Fixtures::attr2());
         $attributes = $collection->getAttributes();
@@ -69,7 +69,7 @@ class CollectionTest extends TestCase
     }
 
     /** @test */
-    public function shouldGetTargets()
+    public function shouldGetTargets(): void
     {
         $collection = new ParsedAttribtubeCollection(Fixtures::attr1(), Fixtures::attr2());
         $targets = $collection->getTargets();
@@ -78,7 +78,7 @@ class CollectionTest extends TestCase
     }
 
     /** @test */
-    public function shouldCountCollection()
+    public function shouldCountCollection(): void
     {
         $collection1 = new ParsedAttribtubeCollection();
         $collection2 = new ParsedAttribtubeCollection(Fixtures::attr1(), Fixtures::attr2());
@@ -87,7 +87,7 @@ class CollectionTest extends TestCase
     }
 
     /** @test */
-    public function shouldGetArray()
+    public function shouldGetArray(): void
     {
         $collection = new ParsedAttribtubeCollection(Fixtures::attr1(), Fixtures::attr2());
         $array = $collection->toArray();
@@ -96,7 +96,7 @@ class CollectionTest extends TestCase
     }
 
     /** @test */
-    public function shouldIterateCollection()
+    public function shouldIterateCollection(): void
     {
         $attributes = new ParsedAttribtubeCollection(Fixtures::attr1(), Fixtures::attr2());
         foreach ($attributes as $attribute) {

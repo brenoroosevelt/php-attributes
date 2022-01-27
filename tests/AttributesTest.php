@@ -21,7 +21,7 @@ use ReflectionProperty;
 class AttributesTest extends TestCase
 {
     /** @test */
-    public function shouldExtractFromClass()
+    public function shouldExtractFromClass(): void
     {
         $attributes = Attr::fromClass(Stub::class)->extract();
         $this->assertEquals(2, $attributes->count());
@@ -32,14 +32,14 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
-    public function shouldGetClassDoesNotExistExceptionWhenExtractFromClass()
+    public function shouldGetClassDoesNotExistExceptionWhenExtractFromClass(): void
     {
         $this->expectException(ClassDoesNotExists::class);
         Attr::fromClass('InvalidClass')->extract();
     }
 
     /** @test */
-    public function shouldExtractFromConstants()
+    public function shouldExtractFromConstants(): void
     {
         $attributes = Attr::fromClassConstants(Stub::class)->extract();
         $this->assertEquals(4, $attributes->count());
@@ -52,7 +52,7 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
-    public function shouldExtractFromConstantsFiltering()
+    public function shouldExtractFromConstantsFiltering(): void
     {
         $attributes = Attr::fromClassConstants(Stub::class, ReflectionClassConstant::IS_PRIVATE)->extract();
         $this->assertEquals(2, $attributes->count());
@@ -63,7 +63,7 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
-    public function shouldExtractFromConstantsByName()
+    public function shouldExtractFromConstantsByName(): void
     {
         $attributes = Attr::fromClassConstants(Stub::class, null, 'D')->extract();
         $this->assertEquals(2, $attributes->count());
@@ -74,7 +74,7 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
-    public function shouldExtractFromConstantsFilteringAndByName()
+    public function shouldExtractFromConstantsFilteringAndByName(): void
     {
         $attributes =
             Attr::fromClassConstants(
@@ -87,28 +87,28 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
-    public function shouldExtractFromConstantsByNameException()
+    public function shouldExtractFromConstantsByNameException(): void
     {
         $this->expectException(ClassConstantDoesNotExists::class);
         Attr::fromClassConstants(Stub::class, null, 'INVALID')->extract();
     }
 
     /** @test */
-    public function shouldGetClassConstantDoesNotExistsException()
+    public function shouldGetClassConstantDoesNotExistsException(): void
     {
         $this->expectException(ClassConstantDoesNotExists::class);
         Attr::fromClassConstants(Stub::class, null, 'INVALID')->extract();
     }
 
     /** @test */
-    public function shouldGetClassDoesNotExistsExceptionWhenExtractConstants()
+    public function shouldGetClassDoesNotExistsExceptionWhenExtractConstants(): void
     {
         $this->expectException(ClassDoesNotExists::class);
         Attr::fromClassConstants('InvalidClass')->extract();
     }
 
     /** @test */
-    public function shouldExtractFromProperty()
+    public function shouldExtractFromProperty(): void
     {
         $attributes = Attr::fromProperties(Stub::class)->extract();
         $this->assertEquals(4, $attributes->count());
@@ -121,7 +121,7 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
-    public function shouldExtractFromPropertyFiltering()
+    public function shouldExtractFromPropertyFiltering(): void
     {
         $attributes = Attr::fromProperties(Stub::class, ReflectionProperty::IS_PRIVATE)->extract();
         $this->assertEquals(2, $attributes->count());
@@ -132,7 +132,7 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
-    public function shouldExtractFromPropertyByName()
+    public function shouldExtractFromPropertyByName(): void
     {
         $attributes = Attr::fromProperties(
             Stub::class,
@@ -147,7 +147,7 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
-    public function shouldExtractFromPropertyByNameAndFiltering()
+    public function shouldExtractFromPropertyByNameAndFiltering(): void
     {
         $attributes = Attr::fromProperties(Stub::class, null, 'y')->extract();
         $this->assertEquals(2, $attributes->count());
@@ -158,14 +158,14 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
-    public function shouldGetPropertyDoesNotExistsWhenExtractProperties()
+    public function shouldGetPropertyDoesNotExistsWhenExtractProperties(): void
     {
         $this->expectException(PropertyDoesNotExists::class);
         Attr::fromProperties(Stub::class, null, 'invalid')->extract();
     }
 
     /** @test */
-    public function shouldGetClassDoesNotExistsExceptionWhenExtractProperties()
+    public function shouldGetClassDoesNotExistsExceptionWhenExtractProperties(): void
     {
         $this->expectException(ClassDoesNotExists::class);
         Attr::fromProperties('InvalidClass')->extract();
@@ -173,7 +173,7 @@ class AttributesTest extends TestCase
 
 
     /** @test */
-    public function shouldExtractFromMethods()
+    public function shouldExtractFromMethods(): void
     {
         $attributes = Attr::fromMethods(Stub::class)->extract();
         $this->assertEquals(8, $attributes->count());
@@ -190,21 +190,21 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
-    public function shouldGetMethodDoesNotExistsExceptionWhenExtractMethods()
+    public function shouldGetMethodDoesNotExistsExceptionWhenExtractMethods(): void
     {
         $this->expectException(MethodDoesNotExists::class);
         Attr::fromMethods(Stub::class, null, 'invalid')->extract();
     }
 
     /** @test */
-    public function shouldGetClassDoesNotExistsExceptionWhenExtractMethods()
+    public function shouldGetClassDoesNotExistsExceptionWhenExtractMethods(): void
     {
         $this->expectException(ClassDoesNotExists::class);
         Attr::fromMethods('InvalidClass')->extract();
     }
 
     /** @test */
-    public function shouldExtractFromMethodsByName()
+    public function shouldExtractFromMethodsByName(): void
     {
         $attributes = Attr::fromMethods(Stub::class, null, 'foo', 'bar')->extract();
         $this->assertEquals(4, $attributes->count());
@@ -217,7 +217,7 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
-    public function shouldExtractFromConstructor()
+    public function shouldExtractFromConstructor(): void
     {
         $attributes = Attr::fromConstructor(Stub::class)->extract();
         $this->assertEquals(2, $attributes->count());
@@ -228,14 +228,14 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
-    public function shouldGetClassDoesNotExistsExceptionWhenExtractConstructor()
+    public function shouldGetClassDoesNotExistsExceptionWhenExtractConstructor(): void
     {
         $this->expectException(ClassDoesNotExists::class);
         Attr::fromConstructor('InvalidClass')->extract();
     }
 
     /** @test */
-    public function shouldGetEmptyCollectionWhenConstructorDoesNotExist()
+    public function shouldGetEmptyCollectionWhenConstructorDoesNotExist(): void
     {
         $attributes = Attr::fromConstructor(new class {
         })->extract();
@@ -243,7 +243,7 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
-    public function shouldExtractFromConstructorParams()
+    public function shouldExtractFromConstructorParams(): void
     {
         $attributes = Attr::fromConstructorParams(Stub::class)->extract();
         $this->assertEquals(2, $attributes->count());
@@ -254,7 +254,7 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
-    public function shouldExtractFromConstructorParamsByName()
+    public function shouldExtractFromConstructorParamsByName(): void
     {
         $attributes = Attr::fromConstructorParams(Stub::class, 'y')->extract();
         $this->assertEquals(1, $attributes->count());
@@ -264,14 +264,14 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
-    public function shouldGetClassDoesNotExistsExceptionWhenExtractConstructorParams()
+    public function shouldGetClassDoesNotExistsExceptionWhenExtractConstructorParams(): void
     {
         $this->expectException(ClassDoesNotExists::class);
         Attr::fromConstructorParams('InvalidClass')->extract();
     }
 
     /** @test */
-    public function shouldExtractFromMethodsParams()
+    public function shouldExtractFromMethodsParams(): void
     {
         $attributes = Attr::fromMethodParams(Stub::class, 'foo')->extract();
         $this->assertEquals(2, $attributes->count());
@@ -279,21 +279,21 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
-    public function shouldGetClassDoesNotExistsExceptionWhenExtractMethodParams()
+    public function shouldGetClassDoesNotExistsExceptionWhenExtractMethodParams(): void
     {
         $this->expectException(ClassDoesNotExists::class);
         Attr::fromMethodParams('InvalidClass', 'foo')->extract();
     }
 
     /** @test */
-    public function shouldGetMethodDoesNotExistsExceptionWhenExtractMethodParams()
+    public function shouldGetMethodDoesNotExistsExceptionWhenExtractMethodParams(): void
     {
         $this->expectException(MethodDoesNotExists::class);
         Attr::fromMethodParams(Stub::class, 'invalid')->extract();
     }
 
     /** @test */
-    public function shouldExtractFromMethodsParamsByName()
+    public function shouldExtractFromMethodsParamsByName(): void
     {
         $attributes = Attr::fromMethodParams(Stub::class, 'foo', 'k')->extract();
         $this->assertEquals(2, $attributes->count());
@@ -304,7 +304,7 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
-    public function shouldExtractFromFunction()
+    public function shouldExtractFromFunction(): void
     {
         $fn = #[Attr1('targetFn')] function () {
         };
@@ -312,13 +312,14 @@ class AttributesTest extends TestCase
         $attributes = Attr::fromFunctions($fn)->extract();
 
         $this->assertEquals(1, $attributes->count());
+        /** @var Attr1[] $instances */
         $instances = $attributes->getInstances();
         $this->assertEquals('targetFn', $instances[0]->id);
         $this->assertContainsOnlyInstancesOf(ReflectionFunction::class, $attributes->getTargets());
     }
 
     /** @test */
-    public function shouldExtractFromFunctionParams()
+    public function shouldExtractFromFunctionParams(): void
     {
         $fn = function (#[Attr1('targetFnParam')] $p) {
         };
@@ -332,7 +333,7 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
-    public function shouldExtractFromFunctionParamsByName()
+    public function shouldExtractFromFunctionParamsByName(): void
     {
         $fn = function (#[Attr1('targetFnParam')] $p, #[Attr1('targetFnParam2')] $p2) {
         };
@@ -346,14 +347,14 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
-    public function shouldGetFunctionDoesNotExistsExceptionWhenExtractFunction()
+    public function shouldGetFunctionDoesNotExistsExceptionWhenExtractFunction(): void
     {
         $this->expectException(FunctionDoesNotExists::class);
         Attr::fromFunctions('invalid_fn')->extract();
     }
 
     /** @test */
-    public function shouldGetFunctionDoesNotExistsExceptionWhenExtractFunctionParams()
+    public function shouldGetFunctionDoesNotExistsExceptionWhenExtractFunctionParams(): void
     {
         $this->expectException(FunctionDoesNotExists::class);
         Attr::fromFunctionParams('invalid')->extract();
