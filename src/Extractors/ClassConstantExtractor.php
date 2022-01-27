@@ -30,9 +30,13 @@ class ClassConstantExtractor implements Extractor
         $reflectionClassConstants =
             empty($this->constants) ?
                 $reflectionClass->getReflectionConstants($this->filter) :
-                array_map(fn(string $constant) => $reflectionClass->getReflectionConstant($constant), $this->constants);
-
-        $reflectionClassConstants = array_filter($reflectionClassConstants, fn($rf) => $this->filterModifiers($rf));
+                array_filter(
+                    array_map(
+                        fn(string $constant) => $reflectionClass->getReflectionConstant($constant),
+                        $this->constants
+                    ),
+                    fn(ReflectionClassConstant $rcc) => $this->filterModifiers($rcc)
+                );
 
         return (new ReflectionExtractor($reflectionClassConstants))->extract($attribute, $flag);
     }

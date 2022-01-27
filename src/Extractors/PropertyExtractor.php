@@ -30,9 +30,13 @@ class PropertyExtractor implements Extractor
         $reflectionProperties =
             empty($this->properties) ?
                 $reflectionClass->getProperties($this->filter) :
-                array_map(fn(string $property) => $reflectionClass->getProperty($property), $this->properties);
-
-        $reflectionProperties = array_filter($reflectionProperties, fn($rp) => $this->filterModifiers($rp));
+                array_filter(
+                    array_map(
+                        fn(string $property) => $reflectionClass->getProperty($property),
+                        $this->properties
+                    ),
+                    fn(ReflectionProperty $rp) => $this->filterModifiers($rp)
+                );
 
         return (new ReflectionExtractor($reflectionProperties))->extract($attribute, $flag);
     }

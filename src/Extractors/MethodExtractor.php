@@ -30,9 +30,13 @@ class MethodExtractor implements Extractor
         $reflectionMethods =
             empty($this->methods) ?
                 $reflectionClass->getMethods($this->filter) :
-                array_map(fn(string $method) => $reflectionClass->getMethod($method), $this->methods);
-
-        $reflectionMethods = array_filter($reflectionMethods, fn($rm) => $this->filterModifiers($rm));
+                array_filter(
+                    array_map(
+                        fn(string $method) => $reflectionClass->getMethod($method),
+                        $this->methods
+                    ),
+                    fn(ReflectionMethod $rm) => $this->filterModifiers($rm)
+                );
 
         return (new ReflectionExtractor($reflectionMethods))->extract($attribute, $flag);
     }
