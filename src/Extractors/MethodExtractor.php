@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace BrenoRoosevelt\PhpAttributes\Extractors;
 
-use BrenoRoosevelt\PhpAttributes\Modifiers\Modifier;
+use BrenoRoosevelt\PhpAttributes\Filtering\Modifier;
 use BrenoRoosevelt\PhpAttributes\ParsedAttribtubeCollection;
 
 use BrenoRoosevelt\PhpAttributes\Exception\ClassDoesNotExists;
@@ -25,7 +25,7 @@ class MethodExtractor implements Extractor
         string ...$methods
     ) {
         $this->methods = $methods;
-        $this->filter = $this->sumModifiers(...array_filter($modifiers, fn($m) => $m instanceof Modifier));
+        $this->filter = Modifier::sum(...array_filter($modifiers, fn($m) => $m instanceof Modifier));
     }
 
     /**

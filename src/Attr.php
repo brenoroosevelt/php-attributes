@@ -13,7 +13,7 @@ use BrenoRoosevelt\PhpAttributes\Extractors\FunctionParamsExtractor;
 use BrenoRoosevelt\PhpAttributes\Extractors\MethodExtractor;
 use BrenoRoosevelt\PhpAttributes\Extractors\MethodParamsExtractor;
 use BrenoRoosevelt\PhpAttributes\Extractors\PropertyExtractor;
-use BrenoRoosevelt\PhpAttributes\Modifiers\Modifier;
+use BrenoRoosevelt\PhpAttributes\Filtering\Modifier;
 use Closure;
 
 /**

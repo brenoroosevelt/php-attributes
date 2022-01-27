@@ -9,7 +9,7 @@ use BrenoRoosevelt\PhpAttributes\Exception\ClassDoesNotExists;
 use BrenoRoosevelt\PhpAttributes\Exception\FunctionDoesNotExists;
 use BrenoRoosevelt\PhpAttributes\Exception\MethodDoesNotExists;
 use BrenoRoosevelt\PhpAttributes\Exception\PropertyDoesNotExists;
-use BrenoRoosevelt\PhpAttributes\Modifiers\Modifier;
+use BrenoRoosevelt\PhpAttributes\Filtering\Modifier;
 use BrenoRoosevelt\PhpAttributes\Tests\Fixture\Attr1;
 use BrenoRoosevelt\PhpAttributes\Tests\Fixture\Stub;
 use ReflectionClass;

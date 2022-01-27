@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace BrenoRoosevelt\PhpAttributes\Extractors;
 
-use BrenoRoosevelt\PhpAttributes\Modifiers\Modifier;
+use BrenoRoosevelt\PhpAttributes\Filtering\Modifier;
 use BrenoRoosevelt\PhpAttributes\ParsedAttribtubeCollection;
 use BrenoRoosevelt\PhpAttributes\Exception\ClassDoesNotExists;
 use BrenoRoosevelt\PhpAttributes\Exception\PropertyDoesNotExists;
@@ -24,7 +24,7 @@ class PropertyExtractor implements Extractor
         string ...$properties
     ) {
         $this->properties = $properties;
-        $this->filter = $this->sumModifiers(...array_filter($modifiers, fn($m) => $m instanceof Modifier));
+        $this->filter = Modifier::sum(...array_filter($modifiers, fn($m) => $m instanceof Modifier));
     }
 
     /**

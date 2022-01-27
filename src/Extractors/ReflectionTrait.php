@@ -8,7 +8,7 @@ use BrenoRoosevelt\PhpAttributes\Exception\ClassDoesNotExists;
 use BrenoRoosevelt\PhpAttributes\Exception\FunctionDoesNotExists;
 use BrenoRoosevelt\PhpAttributes\Exception\MethodDoesNotExists;
 use BrenoRoosevelt\PhpAttributes\Exception\PropertyDoesNotExists;
-use BrenoRoosevelt\PhpAttributes\Modifiers\Modifier;
+use BrenoRoosevelt\PhpAttributes\Filtering\Modifier;
 use Closure;
 use ReflectionClass;
 use ReflectionClassConstant;
@@ -77,17 +77,5 @@ trait ReflectionTrait
         } catch (ReflectionException $e) {
             throw FunctionDoesNotExists::forFunction($function, $e);
         }
-    }
-
-    /**
-     * @param Modifier ...$modifiers
-     * @return int|null
-     */
-    protected function sumModifiers(Modifier ...$modifiers): ?int
-    {
-        return
-            empty($modifiers) ?
-                null :
-                array_reduce($modifiers, fn($sum, Modifier $item) => $sum + $item->value, 0);
     }
 }
