@@ -8,7 +8,6 @@ use BrenoRoosevelt\PhpAttributes\Exception\ClassDoesNotExists;
 use BrenoRoosevelt\PhpAttributes\Exception\FunctionDoesNotExists;
 use BrenoRoosevelt\PhpAttributes\Exception\MethodDoesNotExists;
 use BrenoRoosevelt\PhpAttributes\Exception\PropertyDoesNotExists;
-use BrenoRoosevelt\PhpAttributes\Filtering\Modifier;
 use Closure;
 use ReflectionClass;
 use ReflectionClassConstant;
