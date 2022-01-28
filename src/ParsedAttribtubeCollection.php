@@ -30,6 +30,16 @@ class ParsedAttribtubeCollection implements IteratorAggregate, Countable
         return new self(...$this->data, ...$collection->data);
     }
 
+    public function accept(callable $filter): self
+    {
+        return new self(...array_filter($this->data, $filter));
+    }
+
+    public function reject(callable $filter): self
+    {
+        return new self(...array_filter($this->data, fn(ParsedAttribute $p) => !$filter($p)));
+    }
+
     public function first(): ?ParsedAttribute
     {
         return $this->data[0] ?? null;
