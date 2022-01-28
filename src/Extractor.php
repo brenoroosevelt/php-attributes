@@ -8,7 +8,7 @@ use BrenoRoosevelt\PhpAttributes\Exception\AttributeExtractionException;
 interface Extractor
 {
     /**
-     * Extracts attributes and returns them inside `ParseAttribute` collection
+     * Extracts attributes and returns them inside `ParsedAttribute` collection
      *
      * @param string|null $attribute the fully qualified class name for attribute
      * @param int $flag filter for attribute, ex: \ReflectionAttribute::IS_INSTANCEOF
