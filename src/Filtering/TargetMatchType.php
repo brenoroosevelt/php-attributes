@@ -27,12 +27,14 @@ final class TargetMatchType
     {
         $target = $parsedAttribute->target;
         $types = [];
+
         if ($target instanceof ReflectionParameter || $target instanceof ReflectionProperty) {
-            $types = $this->getTypeHint($target);
+            $this->determineTypeOf($target->getType(), $types);
         } elseif ($target instanceof ReflectionFunctionAbstract) {
-            $types = $this->getReturnType($target);
+            $this->determineTypeOf($target->getReturnType(), $types);
         }
 
+        $this->parseStaticTypes($target, $types);
         foreach ($this->types as $type) {
             if (in_array($type, $types)) {
                 return true;
@@ -42,33 +44,7 @@ final class TargetMatchType
         return false;
     }
 
-    private function getReturnType(ReflectionFunctionAbstract $function): array
-    {
-        $types = [];
-        $returnType = $function->getReturnType();
-        if ($returnType === null) {
-            return $types;
-        }
-
-        $this->determineTypeOf($returnType, $types);
-        $this->parseStaticTypes($function, $types);
-        return $types;
-    }
-
-    private function getTypeHint(ReflectionProperty|ReflectionParameter $subject): array
-    {
-        $types = [];
-        $typeHint = $subject->getType();
-        if ($typeHint === null) {
-            return $types;
-        }
-
-        $this->determineTypeOf($typeHint, $types);
-        $this->parseStaticTypes($subject, $types);
-        return $types;
-    }
-
-    private function determineTypeOf(ReflectionType $reflectionType, array &$types): void
+    private function determineTypeOf(?ReflectionType $reflectionType, array &$types): void
     {
         if ($reflectionType instanceof NamedType) {
             $types[] = $reflectionType->getName();
