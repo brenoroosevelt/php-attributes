@@ -21,7 +21,6 @@ class MethodParamsExtractor implements Extractor
         private readonly string $method,
         string ...$params
     ) {
-        array_walk($params, fn($p) => mb_strtolower($p));
         $this->params = $params;
     }
 
@@ -39,7 +38,7 @@ class MethodParamsExtractor implements Extractor
                 $reflectionMethod->getParameters() :
                 array_filter(
                     $reflectionMethod->getParameters(),
-                    fn(ReflectionParameter $rp) => in_array(mb_strtolower($rp->getName()), $this->params)
+                    fn(ReflectionParameter $rp) => $this->filterByName($rp, $this->params)
                 );
 
         return (new ReflectionExtractor(...$reflectionParams))->extract($attribute, $flag);

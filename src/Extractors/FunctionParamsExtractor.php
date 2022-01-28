@@ -17,7 +17,6 @@ class FunctionParamsExtractor implements Extractor
 
     public function __construct(private readonly string|Closure $function, string ...$params)
     {
-        array_walk($params, fn($p) => mb_strtolower($p));
         $this->params = $params;
     }
 
@@ -33,7 +32,7 @@ class FunctionParamsExtractor implements Extractor
                 $reflectionFunction->getParameters() :
                 array_filter(
                     $reflectionFunction->getParameters(),
-                    fn(ReflectionParameter $rp) => in_array(mb_strtolower($rp->getName()), $this->params)
+                    fn(ReflectionParameter $rp) => $this->filterByName($rp, $this->params)
                 );
 
         return (new ReflectionExtractor(...$reflectionParams))->extract($attribute, $flag);

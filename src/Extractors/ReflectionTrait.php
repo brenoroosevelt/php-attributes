@@ -15,6 +15,7 @@ use ReflectionClassConstant;
 use ReflectionException;
 use ReflectionFunction;
 use ReflectionMethod;
+use ReflectionParameter;
 use ReflectionProperty;
 
 trait ReflectionTrait
@@ -84,5 +85,15 @@ trait ReflectionTrait
         ?int $modifiers
     ): bool {
         return ($modifiers === null) || ($modifiers & $subject->getModifiers());
+    }
+
+    protected function filterByName(
+        ReflectionClassConstant|ReflectionMethod|ReflectionProperty|ReflectionClass|ReflectionParameter $subject,
+        array $names = []
+    ): bool {
+        return in_array(
+            mb_strtolower($subject->getName()),
+            array_map(fn($n) => mb_strtolower($n), $names)
+        );
     }
 }
