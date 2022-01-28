@@ -13,6 +13,11 @@ use ReflectionUnionType as UnionType;
 use ReflectionParameter;
 use ReflectionProperty;
 
+/**
+ * Filtering capabilities
+ * $collection->reject(new TargetMatchType('int'))
+ * $collection->accept(new TargetMatchType('int', 'null', Foo::class))
+ */
 final class TargetMatchType
 {
     /** @var string[] */
