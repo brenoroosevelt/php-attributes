@@ -78,4 +78,11 @@ trait ReflectionTrait
             throw FunctionDoesNotExists::forFunction($function, $e);
         }
     }
+
+    protected function filterModifiers(
+        ReflectionClassConstant|ReflectionMethod|ReflectionProperty $subject,
+        ?int $modifiers
+    ): bool {
+        return ($modifiers === null) || ($modifiers & $subject->getModifiers());
+    }
 }

@@ -42,14 +42,9 @@ class ClassConstantExtractor implements Extractor
                         fn(string $constant) => $this->getConstantOrFail($reflectionClass, $constant),
                         $this->constants
                     ),
-                    fn(ReflectionClassConstant $rcc) => $this->filterModifiers($rcc)
+                    fn(ReflectionClassConstant $rcc) => $this->filterModifiers($rcc, $this->modifiers)
                 );
 
         return (new ReflectionExtractor(...$reflectionClassConstants))->extract($attribute, $flag);
-    }
-
-    private function filterModifiers(ReflectionClassConstant $classConstant): bool
-    {
-        return ($this->modifiers === null) || ($this->modifiers & $classConstant->getModifiers());
     }
 }

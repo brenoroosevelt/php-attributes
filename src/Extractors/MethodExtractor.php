@@ -43,14 +43,9 @@ class MethodExtractor implements Extractor
                         fn(string $method) => $this->getMethodOrFail($reflectionClass, $method),
                         $this->methods
                     ),
-                    fn(ReflectionMethod $rm) => $this->filterModifiers($rm)
+                    fn(ReflectionMethod $rm) => $this->filterModifiers($rm, $this->modifiers)
                 );
 
         return (new ReflectionExtractor(...$reflectionMethods))->extract($attribute, $flag);
-    }
-
-    private function filterModifiers(ReflectionMethod $reflectionMethod): bool
-    {
-        return ($this->modifiers === null) || ($this->modifiers & $reflectionMethod->getModifiers());
     }
 }

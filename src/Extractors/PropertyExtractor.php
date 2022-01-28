@@ -42,14 +42,9 @@ class PropertyExtractor implements Extractor
                         fn(string $property) => $this->getPropertyOrFail($reflectionClass, $property),
                         $this->properties
                     ),
-                    fn(ReflectionProperty $rp) => $this->filterModifiers($rp)
+                    fn(ReflectionProperty $rp) => $this->filterModifiers($rp, $this->modifiers)
                 );
 
         return (new ReflectionExtractor(...$reflectionProperties))->extract($attribute, $flag);
-    }
-
-    private function filterModifiers(ReflectionProperty $reflectionProperty): bool
-    {
-        return ($this->modifiers === null) || ($this->modifiers & $reflectionProperty->getModifiers());
     }
 }
