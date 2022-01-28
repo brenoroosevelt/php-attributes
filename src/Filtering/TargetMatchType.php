@@ -21,27 +21,27 @@ use ReflectionProperty;
 final class TargetMatchType
 {
     /** @var string[] */
-    private readonly array $types;
+    private readonly array $desiredTypes;
 
-    public function __construct(string ...$types)
+    public function __construct(string ...$desiredTypes)
     {
-        $this->types = $types;
+        $this->desiredTypes = $desiredTypes;
     }
 
     public function __invoke(ParsedAttribute $parsedAttribute): bool
     {
         $target = $parsedAttribute->target;
-        $types = [];
+        $targetTypes = [];
 
         if ($target instanceof ReflectionParameter || $target instanceof ReflectionProperty) {
-            $this->determineTypeOf($target->getType(), $types);
+            $this->determineTypeOf($target->getType(), $targetTypes);
         } elseif ($target instanceof ReflectionFunctionAbstract) {
-            $this->determineTypeOf($target->getReturnType(), $types);
+            $this->determineTypeOf($target->getReturnType(), $targetTypes);
         }
 
-        $this->parseStaticTypes($target, $types);
-        foreach ($this->types as $type) {
-            if (in_array($type, $types)) {
+        $this->parseStaticTypes($target, $targetTypes);
+        foreach ($this->desiredTypes as $desiredType) {
+            if (in_array($desiredType, $targetTypes)) {
                 return true;
             }
         }
